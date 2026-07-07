@@ -1,0 +1,90 @@
+---
+import { site } from "../content/site";
+import logo from "../assets/web/logo.png";
+import { Image } from "astro:assets";
+---
+
+<section id="contact" class="py-12 lg:py-16 circuit-pattern" aria-labelledby="contact-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8">
+      <Image
+        src={logo}
+        alt="Ultra Wave Technologies"
+        width={550}
+        height={539}
+        class="h-16 w-16 object-contain mx-auto mb-6"
+        loading="lazy"
+      />
+      <h2 id="contact-heading" class="text-2xl sm:text-3xl font-bold text-brand-blue font-serif">
+        {site.cta}
+      </h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+      <div class="space-y-6">
+        <div class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+          <h3 class="font-semibold text-gray-900 mb-6">Contact Information</h3>
+
+          <div class="space-y-5">
+            {
+              site.phones.map((phone, i) => (
+                <a
+                  href={`tel:${phone.number}`}
+                  class:list={[
+                    "flex items-center gap-4 group",
+                    i === 0 ? "text-brand-maroon" : "text-gray-700",
+                  ]}
+                >
+                  <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 group-hover:bg-brand-blue/10 transition-colors" aria-hidden="true">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <span class="font-medium group-hover:text-brand-blue transition-colors">{phone.display}</span>
+                </a>
+              ))
+            }
+
+            <a href={`mailto:${site.email}`} class="flex items-center gap-4 text-brand-maroon group">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 group-hover:bg-brand-blue/10 transition-colors" aria-hidden="true">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </span>
+              <span class="font-medium group-hover:text-brand-blue transition-colors break-all">{site.email}</span>
+            </a>
+
+            <div class="flex items-start gap-4 text-gray-700">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 shrink-0" aria-hidden="true">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </span>
+              <address class="not-italic font-medium leading-relaxed">
+                {site.address.full}
+              </address>
+            </div>
+
+            <p class="text-sm text-gray-500 pt-2">
+              Contact: <span class="font-medium text-gray-700">{site.contactPerson}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 min-h-[300px]">
+        <iframe
+          title="Ultra Wave Technologies location on Google Maps"
+          src="https://maps.google.com/maps?q=Art+Tower+Al+Raffa+Dubai+UAE&output=embed"
+          width="100%"
+          height="100%"
+          style="border:0; min-height: 350px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        />
+      </div>
+    </div>
+  </div>
+</section>

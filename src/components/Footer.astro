@@ -1,0 +1,51 @@
+---
+import { site, navLinks } from "../content/site";
+---
+
+<footer class="bg-brand-blue-dark text-white py-12" role="contentinfo">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div>
+        <h3 class="text-lg font-bold mb-2">{site.shortName} Wave Technologies</h3>
+        <p class="text-sm text-white/70 leading-relaxed">{site.tagline}</p>
+        <p class="text-sm text-white/70 mt-2">{site.focus}</p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider mb-4 text-white/90">Quick Links</h4>
+        <ul class="space-y-2" role="list">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-white/70 hover:text-white transition-colors">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider mb-4 text-white/90">Contact</h4>
+        <ul class="space-y-2 text-sm text-white/70" role="list">
+          <li>
+            <a href={`mailto:${site.email}`} class="hover:text-white transition-colors">{site.email}</a>
+          </li>
+          {
+            site.phones.map((phone) => (
+              <li>
+                <a href={`tel:${phone.number}`} class="hover:text-white transition-colors">{phone.display}</a>
+              </li>
+            ))
+          }
+          <li>{site.address.full}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-8 border-t border-white/10 text-center text-sm text-white/50">
+      <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

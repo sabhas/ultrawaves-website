@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 607" fill="none" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="607" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a0a0a"/>
+      <stop offset="1" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1a7fc4" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#005696" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="607" fill="url(#bg)"/>
+  <g opacity="0.08" stroke="#fff" stroke-width="1">
+    <path d="M0 400 H300 L330 370 L360 400 H600"/>
+    <circle cx="300" cy="400" r="3" fill="#fff" stroke="none"/>
+  </g>
+  <g transform="translate(680 80)">
+    <rect x="0" y="40" width="380" height="240" rx="12" fill="#111" stroke="#333" stroke-width="2"/>
+    <rect x="20" y="60" width="340" height="180" rx="4" fill="url(#screen)"/>
+    <rect x="40" y="80" width="120" height="8" rx="2" fill="#fff" opacity="0.6"/>
+    <rect x="40" y="100" width="200" height="6" rx="2" fill="#fff" opacity="0.3"/>
+    <rect x="40" y="116" width="180" height="6" rx="2" fill="#fff" opacity="0.3"/>
+    <rect x="40" y="132" width="160" height="6" rx="2" fill="#fff" opacity="0.3"/>
+    <rect x="40" y="160" width="80" height="28" rx="4" fill="#005696" opacity="0.7"/>
+    <rect x="140" y="200" width="300" height="12" rx="6" fill="#222"/>
+    <path d="M60 280 L320 280" stroke="#444" stroke-width="3"/>
+    <rect x="150" y="292" width="80" height="8" rx="2" fill="#333"/>
+  </g>
+  <text x="600" y="420" text-anchor="middle" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="4">WEBSITE DESIGN</text>
+  <text x="600" y="490" text-anchor="middle" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700" letter-spacing="6" opacity="0.9">AND DEVELOPMENT</text>
+</svg>

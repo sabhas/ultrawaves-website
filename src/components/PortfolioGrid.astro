@@ -1,0 +1,48 @@
+---
+import { portfolioItems } from "../content/portfolio";
+import { Image } from "astro:assets";
+
+const images = await Promise.all(
+  portfolioItems.map(async (item, i) => {
+    const num = String(i + 1).padStart(2, "0");
+    const mod = await import(`../assets/web/portfolio/work-${num}.webp`);
+    return { ...item, src: mod.default };
+  })
+);
+---
+
+<section id="portfolio" class="py-12 lg:py-16 bg-gray-900 text-white" aria-labelledby="portfolio-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <p class="text-brand-orange-light text-sm font-semibold tracking-widest uppercase mb-2">Network</p>
+      <h2 id="portfolio-heading" class="text-3xl sm:text-4xl font-bold">
+        Our Recent Work
+      </h2>
+      <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+        Delivering excellence in structured cabling, fiber optics and network infrastructure across Dubai.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        images.map((item) => (
+          <figure class="group rounded-xl overflow-hidden bg-gray-800 shadow-lg">
+            <div class="aspect-[4/3] overflow-hidden">
+              <Image
+                src={item.src}
+                alt={item.caption}
+                width={400}
+                height={300}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="p-4 text-sm text-gray-300 font-serif text-center">
+              {item.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

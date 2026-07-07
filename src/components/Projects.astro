@@ -1,0 +1,55 @@
+---
+import { projects } from "../content/projects";
+---
+
+<section id="projects" class="py-12 lg:py-16" aria-labelledby="projects-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">OUR</span>
+      <h2 id="projects-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
+        Projects
+      </h2>
+    </div>
+
+    <div class="space-y-8">
+      {
+        projects.map((project, i) => (
+          <article
+            class:list={[
+              "flex flex-col gap-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm",
+              i % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row",
+            ]}
+          >
+            <div class="lg:w-2/5 flex items-center justify-center">
+              <div class="w-full aspect-[4/3] rounded-xl bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 flex items-center justify-center">
+                <div class="text-center p-6">
+                  <span class="text-5xl font-bold text-brand-blue/20 block mb-2">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="text-sm font-semibold text-brand-orange uppercase tracking-wider">{project.subtitle}</span>
+                </div>
+              </div>
+            </div>
+            <div class="lg:w-3/5">
+              <h3 class="text-2xl font-bold text-brand-orange font-serif mb-1">{project.title}</h3>
+              <p class="text-gray-600 font-serif mb-4">{project.description}</p>
+              <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Scope of Work</h4>
+              <ul class="space-y-2" role="list">
+                {
+                  project.scope.map((item) => (
+                    <li class="flex items-start gap-2 text-gray-600 text-sm">
+                      <span class="text-brand-blue mt-0.5" aria-hidden="true">▸</span>
+                      {item}
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="text-center mt-12 text-gray-500 font-semibold tracking-widest uppercase">
+      And many more...
+    </p>
+  </div>
+</section>

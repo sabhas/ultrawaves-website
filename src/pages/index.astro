@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import ServicesOverview from "../components/ServicesOverview.astro";
+import ServiceSection from "../components/ServiceSection.astro";
+import PortfolioGrid from "../components/PortfolioGrid.astro";
+import Projects from "../components/Projects.astro";
+import ClientLogos from "../components/ClientLogos.astro";
+import ContactSection from "../components/ContactSection.astro";
+import Footer from "../components/Footer.astro";
+import { services } from "../content/services";
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <Hero />
+    <About />
+    <ServicesOverview />
+    {services.map((service, index) => <ServiceSection service={service} index={index} />)}
+    <PortfolioGrid />
+    <Projects />
+    <ClientLogos />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

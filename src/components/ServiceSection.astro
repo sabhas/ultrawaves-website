@@ -1,0 +1,104 @@
+---
+import type { Service } from "../content/services";
+import { Image } from "astro:assets";
+
+interface Props {
+  service: Service;
+  index: number;
+}
+
+const { service, index } = Astro.props;
+
+const heroImages: Record<string, ImageMetadata> = {
+  cabling: (await import("../assets/web/heroes/cabling.webp")).default,
+  cctv: (await import("../assets/web/heroes/cctv.webp")).default,
+  pabx: (await import("../assets/web/heroes/pabx.webp")).default,
+  wifi: (await import("../assets/web/heroes/wifi.webp")).default,
+  access: (await import("../assets/web/heroes/access.webp")).default,
+  intercom: (await import("../assets/web/heroes/intercom.webp")).default,
+  automation: (await import("../assets/web/heroes/automation.webp")).default,
+  amc: (await import("../assets/web/heroes/amc.webp")).default,
+  web: (await import("../assets/web/heroes/web.svg")).default,
+  marketing: (await import("../assets/web/heroes/marketing.svg")).default,
+};
+
+const heroImg = heroImages[service.id];
+---
+
+<section
+  id={service.id}
+  class:list={["py-10 lg:py-14", index % 2 === 0 ? "bg-white" : "bg-gray-50"]}
+  aria-labelledby={`${service.id}-heading`}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mb-8 overflow-hidden rounded-2xl shadow-lg ring-1 ring-gray-200/80">
+      {
+        heroImg && (
+          <Image
+            src={heroImg}
+            alt=""
+            width={1200}
+            height={700}
+            class="block w-full h-auto"
+            loading="lazy"
+          />
+        )
+      }
+      <h2 id={`${service.id}-heading`} class="sr-only">
+        {service.title}
+        {service.subtitle ? ` — ${service.subtitle}` : ""}
+      </h2>
+    </div>
+
+    <div class="max-w-4xl">
+      <p class="text-gray-600 leading-relaxed font-serif text-base sm:text-lg mb-8">
+        {service.description}
+      </p>
+
+      {
+        service.bullets && (
+          <div class="mb-8">
+            <h3 class="section-heading text-lg mb-4 uppercase">Network Cabling Services</h3>
+            <ul class="space-y-2" role="list">
+              {
+                service.bullets.map((bullet) => (
+                  <li class="flex items-start gap-3 text-gray-700">
+                    <span class="mt-1.5 h-2 w-2 rounded-full bg-brand-orange shrink-0" aria-hidden="true" />
+                    {bullet}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        service.highlights && (
+          <div class="mb-8 space-y-3">
+            {
+              service.highlights.map((h) => (
+                <p class="text-gray-700 pl-4 border-l-4 border-brand-orange font-serif">{h}</p>
+              ))
+            }
+          </div>
+        )
+      }
+
+      {
+        service.features && (
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+              service.features.map((feature) => (
+                <div class="rounded-xl bg-white border border-gray-100 p-6 shadow-sm">
+                  <h3 class="font-semibold text-brand-orange mb-2">{feature.title}</h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">{feature.description}</p>
+                </div>
+              ))
+            }
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

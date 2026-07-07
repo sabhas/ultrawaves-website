@@ -1,0 +1,145 @@
+---
+import { site, navLinks } from "../content/site";
+import logoIcon from "../assets/web/logo.png";
+import logoWithText from "../assets/web/logo-with-text.png";
+import { Image } from "astro:assets";
+---
+
+<header
+  id="header"
+  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-shadow"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between lg:h-20">
+      <a href="#" class="flex items-center shrink-0" aria-label="Ultra Wave Technologies home">
+        <Image
+          src={logoIcon}
+          alt="Ultra Wave Technologies logo"
+          width={550}
+          height={539}
+          class="h-10 w-10 object-contain sm:hidden"
+        />
+        <Image
+          src={logoWithText}
+          alt="Ultra Wave Technologies"
+          width={775}
+          height={537}
+          class="hidden sm:block h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain"
+        />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-blue transition-colors rounded-lg hover:bg-brand-blue/5"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a
+          href="#contact"
+          class="hidden sm:inline-flex items-center rounded-lg bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue-dark transition-colors"
+        >
+          Contact Us
+        </a>
+
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle navigation menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-gray-100 bg-white"
+    aria-label="Mobile navigation"
+  >
+    <div class="mx-auto max-w-7xl px-4 py-4 space-y-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="mobile-nav-link block rounded-lg px-4 py-3 text-base font-medium text-gray-700 hover:bg-brand-blue/5 hover:text-brand-blue"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="#contact"
+        class="block rounded-lg bg-brand-blue px-4 py-3 text-center text-base font-semibold text-white hover:bg-brand-blue-dark mt-2"
+      >
+        Contact Us
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-icon-open");
+  const closeIcon = document.getElementById("menu-icon-close");
+  const header = document.getElementById("header");
+
+  btn?.addEventListener("click", () => {
+    const isOpen = !menu?.classList.contains("hidden");
+    menu?.classList.toggle("hidden");
+    btn.setAttribute("aria-expanded", String(!isOpen));
+    openIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  });
+
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      menu?.classList.add("hidden");
+      btn?.setAttribute("aria-expanded", "false");
+      openIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    if (!header) return;
+    header.classList.toggle("shadow-md", window.scrollY > 10);
+  });
+
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            const href = link.getAttribute("href");
+            link.classList.toggle("text-brand-blue", href === `#${id}`);
+            link.classList.toggle("font-semibold", href === `#${id}`);
+            link.classList.toggle("text-gray-600", href !== `#${id}`);
+          });
+        }
+      });
+    },
+    { rootMargin: "-30% 0px -60% 0px" }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+</script>
