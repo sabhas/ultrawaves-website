@@ -1,4 +1,5 @@
 export interface Project {
+  id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -7,6 +8,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "moon-tower",
     title: "Moon Tower, Dubai",
     subtitle: "Business Bay",
     description:
@@ -19,6 +21,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "vida",
     title: "Vida, Dubai",
     subtitle: "Emaar Development",
     description:
@@ -32,6 +35,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "hidd-marina",
     title: "Hidd Al-Saadiyat Marina",
     subtitle: "Abu Dhabi",
     description:
@@ -44,6 +48,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "al-durrah",
     title: "Al Durrah Tower, Al Barsha",
     subtitle: "Under MABC Building Contracting LLC",
     description: "Modern commercial tower in Al Barsha, Dubai.",
@@ -57,6 +62,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "executive-towers",
     title: "Executive Towers, Dubai",
     subtitle: "Home Automation — Tower E",
     description:
@@ -71,6 +77,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "helipad",
     title: "Helipad by Frozen Cherry",
     subtitle: "Festival City Mall, Dubai",
     description:
