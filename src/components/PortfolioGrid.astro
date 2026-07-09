@@ -27,13 +27,13 @@ const images = await Promise.all(
       {
         images.map((item) => (
           <figure class="group rounded-xl overflow-hidden bg-gray-800 shadow-lg">
-            <div class="aspect-[4/3] overflow-hidden">
+            <div class="aspect-[3/4] overflow-hidden bg-gray-950">
               <Image
                 src={item.src}
                 alt={item.caption}
-                width={400}
-                height={300}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                widths={[400, 600, 900]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
             </div>
