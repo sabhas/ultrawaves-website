@@ -18,18 +18,34 @@ import { partners } from "../content/clients";
       {
         partners.map((partner) => (
           <div
-            class="flex items-center justify-center rounded-xl bg-white border border-gray-100 px-6 py-8 shadow-sm hover:shadow-md transition-shadow group"
+            class="partner-card group flex items-center justify-center rounded-xl bg-white border border-gray-100 px-6 py-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--partner-color)]"
+            style={`--partner-color: ${partner.color}`}
           >
-            <span
-              class="text-lg sm:text-xl font-bold tracking-tight text-gray-400 transition-colors group-hover:text-[var(--partner-color)]"
-              style={`--partner-color: ${partner.color}`}
-            >
+            <span class="text-lg sm:text-xl font-bold tracking-tight text-[var(--partner-color)] transition-transform duration-300 group-hover:scale-105">
               {partner.name}
             </span>
           </div>
         ))
       }
     </div>
+
+    <style>
+      .partner-card {
+        background-image: linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--partner-color) 8%, white),
+          white 60%
+        );
+      }
+
+      .partner-card:hover {
+        background-image: linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--partner-color) 16%, white),
+          white 55%
+        );
+      }
+    </style>
 
     <p class="text-center mt-10 text-brand-orange font-serif italic">
       And many more...
