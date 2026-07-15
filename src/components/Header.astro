@@ -24,7 +24,7 @@ import { Image } from "astro:assets";
           alt="Ultra Wave Technologies"
           width={775}
           height={537}
-          class="hidden sm:block h-11 lg:h-13 w-auto max-h-[calc(100%-0.5rem)] object-contain transition-all duration-300"
+          class="hidden sm:block h-11 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain transition-all duration-300"
         />
       </a>
 
@@ -32,7 +32,7 @@ import { Image } from "astro:assets";
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="nav-link relative px-3 py-2 text-sm font-medium text-text-secondary dark:text-text-dark-secondary hover:text-brand-navy dark:hover:text-text-dark-primary transition-colors rounded-lg hover:bg-brand-navy/5 dark:hover:bg-white/5"
+            class="nav-link group relative px-3 py-2 text-sm font-medium text-text-secondary dark:text-text-dark-secondary hover:text-brand-navy dark:hover:text-text-dark-primary transition-colors rounded-lg hover:bg-brand-navy/5 dark:hover:bg-white/5"
           >
             {link.label}
             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-blue rounded-full transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
@@ -208,7 +208,7 @@ import { Image } from "astro:assets";
         }
       });
     },
-    { rootMargin: "-30% 0px -60% 0px" }
+    { rootMargin: "-10% 0px -35% 0px" }
   );
 
   sections.forEach((section) => observer.observe(section));

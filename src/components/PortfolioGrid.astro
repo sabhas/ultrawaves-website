@@ -28,6 +28,7 @@ const images = await Promise.all(
       {images.map((item) => (
         <button
           data-index={item.index}
+          data-caption={item.caption}
           class="portfolio-item group relative rounded-xl overflow-hidden bg-surface-dark-secondary shadow-lg text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
           aria-label={`View ${item.caption}`}
         >
@@ -112,7 +113,7 @@ const images = await Promise.all(
     // Build image data array from the items
     const imageData = Array.from(items).map((item) => {
       const img = item.querySelector("img");
-      const caption = item.querySelector(".group-hover\\:opacity-100 p:first-child")?.textContent || "";
+      const caption = item.dataset.caption || "";
       return { src: img?.src || "", caption };
     });
 
