@@ -2,55 +2,117 @@
 import { partners } from "../content/clients";
 ---
 
-<section id="partners" class="py-12 lg:py-16 bg-gray-50" aria-labelledby="partners-heading">
+<section id="partners" class="py-16 lg:py-24 bg-surface-secondary dark:bg-surface-dark-secondary transition-colors overflow-hidden" aria-labelledby="partners-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div data-animate="fade-in-up" class="text-center mb-10">
-      <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">OUR</span>
-      <h2 id="partners-heading" class="text-3xl sm:text-4xl font-bold text-brand-orange -mt-8 sm:-mt-12 relative">
-        Partners
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">Trusted By</span>
+      <h2 id="partners-heading" class="section-heading">
+        Our Partners
       </h2>
-      <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+      <p class="mt-6 text-text-secondary dark:text-text-dark-secondary max-w-2xl mx-auto text-lg">
         Trusted technology partners enabling world-class solutions.
       </p>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-      {
-        partners.map((partner, i) => (
-          <div
-            data-animate="fade-in-up"
-            data-animate-delay={i * 80}
-            class="partner-card group flex items-center justify-center rounded-xl bg-dark-card border border-dark-border px-6 py-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--partner-color)]"
-            style={`--partner-color: ${partner.color}`}
-          >
-            <span class="text-lg sm:text-xl font-bold tracking-tight text-[var(--partner-color)] transition-transform duration-300 group-hover:scale-110">
-              {partner.name}
-            </span>
-          </div>
-        ))
-      }
+    <!-- CSS-only infinite scroll carousel -->
+    <div class="relative" aria-label="Partner logos">
+      <!-- Gradient edge fade -->
+      <div class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-surface-secondary dark:from-surface-dark-secondary to-transparent z-10 pointer-events-none" aria-hidden="true" />
+      <div class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-surface-secondary dark:from-surface-dark-secondary to-transparent z-10 pointer-events-none" aria-hidden="true" />
+
+      <div class="carousel-track-wrapper overflow-hidden">
+        <div class="carousel-track flex gap-6">
+          {/* First set */}
+          {partners.map((partner, i) => (
+            <div
+              class="partner-card shrink-0 flex items-center justify-center rounded-xl bg-surface dark:bg-surface-dark-tertiary border border-border dark:border-border-dark px-8 py-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-[var(--partner-color)]"
+              style={`--partner-color: ${partner.color}`}
+            >
+              <span class="text-xl font-bold tracking-tight text-[var(--partner-color)] select-none">
+                {partner.name}
+              </span>
+            </div>
+          ))}
+          {/* Duplicate set for seamless loop */}
+          {partners.map((partner, i) => (
+            <div
+              class="partner-card shrink-0 flex items-center justify-center rounded-xl bg-surface dark:bg-surface-dark-tertiary border border-border dark:border-border-dark px-8 py-6 shadow-sm"
+              style={`--partner-color: ${partner.color}`}
+              aria-hidden="true"
+            >
+              <span class="text-xl font-bold tracking-tight text-[var(--partner-color)] select-none">
+                {partner.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
 
-    <style>
-      .partner-card {
-        background-image: linear-gradient(
-          to bottom,
-          color-mix(in srgb, var(--partner-color) 6%, transparent),
-          transparent 60%
-        );
-      }
-
-      .partner-card:hover {
-        background-image: linear-gradient(
-          to bottom,
-          color-mix(in srgb, var(--partner-color) 14%, transparent),
-          transparent 55%
-        );
-      }
-    </style>
-
-    <p class="text-center mt-10 text-brand-orange font-serif italic">
-      And many more...
+    <p class="text-center mt-10 text-text-tertiary dark:text-text-dark-tertiary font-serif italic">
+      And many more trusted partnerships
     </p>
   </div>
 </section>
+
+<style>
+  .carousel-track-wrapper {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+  }
+
+  .carousel-track {
+    animation: scroll-logos 30s linear infinite;
+    width: max-content;
+  }
+
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll-logos {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .partner-card {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--partner-color) 8%, transparent),
+      transparent 60%
+    );
+  }
+
+  .dark .partner-card {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--partner-color) 12%, transparent),
+      transparent 60%
+    );
+  }
+
+  .partner-card:hover {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--partner-color) 18%, transparent),
+      transparent 55%
+    );
+  }
+</style>

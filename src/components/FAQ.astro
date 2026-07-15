@@ -1,0 +1,105 @@
+---
+import { faqs } from "../content/faq";
+---
+
+<section id="faq" class="py-16 lg:py-24 bg-surface-secondary dark:bg-surface-dark-secondary transition-colors" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">Have Questions?</span>
+      <h2 id="faq-heading" class="section-heading">
+        Frequently Asked Questions
+      </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+    </div>
+
+    <div class="space-y-3" id="faq-list">
+      {faqs.map((faq) => (
+        <div class="faq-item rounded-2xl bg-surface dark:bg-surface-dark border border-border dark:border-border-dark shadow-sm transition-all">
+          <button
+            class="faq-toggle w-full flex items-center justify-between px-6 py-5 text-left"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${faq.id}`}
+          >
+            <span class="text-sm sm:text-base font-semibold text-text-primary dark:text-text-dark-primary pr-4">
+              {faq.question}
+            </span>
+            <svg class="faq-chevron h-4 w-4 shrink-0 text-text-tertiary dark:text-text-dark-tertiary transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div
+            id={`faq-answer-${faq.id}`}
+            class="faq-answer overflow-hidden max-h-0 transition-all duration-300 ease-in-out"
+            role="region"
+          >
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-sm text-text-secondary dark:text-text-dark-secondary leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const items = document.querySelectorAll(".faq-item");
+    items.forEach((item) => {
+      const toggle = item.querySelector(".faq-toggle");
+      const answer = item.querySelector(".faq-answer");
+      const chevron = item.querySelector(".faq-chevron");
+
+      toggle?.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+
+        // Close all others
+        items.forEach((other) => {
+          const otherToggle = other.querySelector(".faq-toggle");
+          const otherAnswer = other.querySelector(".faq-answer");
+          const otherChevron = other.querySelector(".faq-chevron");
+          if (other !== item) {
+            otherToggle?.setAttribute("aria-expanded", "false");
+            if (otherAnswer) otherAnswer.style.maxHeight = "0";
+            otherChevron?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        if (isOpen) {
+          answer.style.maxHeight = "0";
+          chevron?.classList.remove("rotate-180");
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+          chevron?.classList.add("rotate-180");
+        }
+      });
+    });
+
+    // Scroll reveal for FAQ items
+    const faqList = document.getElementById("faq-list");
+    if (faqList) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll(".faq-item").forEach((item, i) => {
+              item.style.opacity = "0";
+              item.style.transform = "translateY(12px)";
+              item.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+              setTimeout(() => {
+                item.style.opacity = "1";
+                item.style.transform = "translateY(0)";
+              }, i * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(faqList);
+    }
+  })();
+</script>

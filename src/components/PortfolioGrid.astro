@@ -6,43 +6,181 @@ const images = await Promise.all(
   portfolioItems.map(async (item, i) => {
     const num = String(i + 1).padStart(2, "0");
     const mod = await import(`../assets/web/portfolio/work-${num}.webp`);
-    return { ...item, src: mod.default };
+    return { ...item, src: mod.default, index: i };
   })
 );
 ---
 
-<section id="portfolio" class="py-12 lg:py-16 bg-gray-900 text-white" aria-labelledby="portfolio-heading">
+<section id="portfolio" class="py-16 lg:py-24 bg-surface-dark transition-colors" aria-labelledby="portfolio-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div data-animate="fade-in-up" class="text-center mb-10">
-      <p class="text-brand-orange-light text-sm font-semibold tracking-widest uppercase mb-2">Network</p>
-      <h2 id="portfolio-heading" class="text-3xl sm:text-4xl font-bold">
-        Our Recent Work
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <p class="section-label text-brand-amber-light">Our Work</p>
+      <h2 id="portfolio-heading" class="section-heading !text-white">
+        Portfolio
       </h2>
-      <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+      <p class="mt-6 text-white/50 max-w-2xl mx-auto text-lg">
         Delivering excellence in structured cabling, fiber optics and network infrastructure across Dubai.
       </p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {
-        images.map((item, i) => (
-          <figure data-animate="fade-in-up" data-animate-delay={i * 100} class="group rounded-xl overflow-hidden bg-gray-800 shadow-lg">
-            <div class="aspect-[3/4] overflow-hidden bg-gray-950">
-              <Image
-                src={item.src}
-                alt={item.caption}
-                widths={[400, 600, 900]}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children" id="portfolio-grid">
+      {images.map((item) => (
+        <button
+          data-index={item.index}
+          class="portfolio-item group relative rounded-xl overflow-hidden bg-surface-dark-secondary shadow-lg text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
+          aria-label={`View ${item.caption}`}
+        >
+          <div class="aspect-[3/4] overflow-hidden">
+            <Image
+              src={item.src}
+              alt={item.caption}
+              widths={[400, 600, 900]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out"
+              loading="lazy"
+            />
+          </div>
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <p class="text-white text-sm font-medium">{item.caption}</p>
+              <p class="text-white/60 text-xs mt-1">Click to view full size</p>
             </div>
-            <figcaption class="p-4 text-sm text-gray-300 font-serif text-center">
-              {item.caption}
-            </figcaption>
-          </figure>
-        ))
-      }
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image viewer"
+  >
+    <button
+      id="lightbox-close"
+      class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+      aria-label="Close viewer"
+    >
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <button
+      id="lightbox-prev"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+      aria-label="Previous image"
+    >
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <button
+      id="lightbox-next"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+      aria-label="Next image"
+    >
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+    <div class="max-w-4xl max-h-[85vh] w-full">
+      <img id="lightbox-img" src="" alt="" class="w-full h-full object-contain rounded-2xl" />
+      <p id="lightbox-caption" class="text-white/70 text-sm text-center mt-4 font-medium"></p>
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    const items = document.querySelectorAll(".portfolio-item");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const closeBtn = document.getElementById("lightbox-close");
+    const prevBtn = document.getElementById("lightbox-prev");
+    const nextBtn = document.getElementById("lightbox-next");
+    let currentIndex = 0;
+
+    // Build image data array from the items
+    const imageData = Array.from(items).map((item) => {
+      const img = item.querySelector("img");
+      const caption = item.querySelector(".group-hover\\:opacity-100 p:first-child")?.textContent || "";
+      return { src: img?.src || "", caption };
+    });
+
+    function openLightbox(index) {
+      if (index < 0 || index >= imageData.length) return;
+      currentIndex = index;
+      const data = imageData[currentIndex];
+      lightboxImg.src = data.src;
+      lightboxImg.alt = data.caption;
+      lightboxCaption.textContent = data.caption;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add("hidden");
+      lightbox.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    function prevImage() {
+      if (currentIndex > 0) openLightbox(currentIndex - 1);
+      else openLightbox(imageData.length - 1);
+    }
+
+    function nextImage() {
+      if (currentIndex < imageData.length - 1) openLightbox(currentIndex + 1);
+      else openLightbox(0);
+    }
+
+    items.forEach((item) => {
+      item.addEventListener("click", () => {
+        const idx = parseInt(item.dataset.index || "0");
+        openLightbox(idx);
+      });
+    });
+
+    closeBtn?.addEventListener("click", closeLightbox);
+    prevBtn?.addEventListener("click", prevImage);
+    nextBtn?.addEventListener("click", nextImage);
+
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (lightbox?.classList.contains("hidden")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") nextImage();
+    });
+
+    // Click outside image to close
+    lightbox?.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Stagger animation for portfolio grid
+    const grid = document.getElementById("portfolio-grid");
+    if (grid) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(grid);
+    }
+  })();
+</script>

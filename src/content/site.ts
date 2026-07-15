@@ -11,6 +11,7 @@ export const site = {
     { label: "Office", number: "+971545404607", display: "+971 54 540 4607" },
     { label: "Support", number: "+971502588347", display: "+971 50 258 8347" },
   ],
+  whatsapp: "+971542375092",
   address: {
     street: "Art Tower, Mezzanine Floor 2",
     area: "Al Raffa",
@@ -21,6 +22,17 @@ export const site = {
   contactPerson: "Sultan Al Hasnani",
   focus: "IT Network Services",
   cta: "Get in Touch for Free Consultation",
+  socialLinks: [
+    { platform: "LinkedIn", url: "https://linkedin.com/company/ultrawavetechnologies" },
+    { platform: "Instagram", url: "https://instagram.com/ultrawavetech" },
+    { platform: "Facebook", url: "https://facebook.com/ultrawavetechnologies" },
+  ],
+  stats: [
+    { number: "10+", label: "Years Experience" },
+    { number: "50+", label: "Projects Delivered" },
+    { number: "100+", label: "Happy Clients" },
+    { number: "24/7", label: "Support" },
+  ],
 } as const;
 
 export const about = {

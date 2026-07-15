@@ -1,47 +1,74 @@
 ---
-import { about } from "../content/site";
+import { about, site } from "../content/site";
 import aboutIllustration from "../assets/web/about-illustration.svg";
 import { Image } from "astro:assets";
 ---
 
-<section id="about" class="py-12 lg:py-16 bg-dark-surface" aria-labelledby="about-heading">
+<section id="about" class="py-16 lg:py-24 bg-surface-secondary dark:bg-surface-dark-secondary transition-colors" aria-labelledby="about-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div data-animate="fade-in-up" class="text-center mb-10">
-      <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">ABOUT</span>
-      <h2 id="about-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
+    <!-- Section header -->
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">About Us</span>
+      <h2 id="about-heading" class="section-heading">
         Who We Are
       </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <div data-animate="fade-in-left" class="space-y-5">
+    <!-- Content + illustration -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+      <div class="space-y-5 animate-on-scroll">
         {
           about.paragraphs.map((p) => (
-            <p class="text-gray-600 leading-relaxed font-serif text-base sm:text-lg">{p}</p>
+            <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed text-base sm:text-lg">{p}</p>
           ))
         }
       </div>
 
-      <div data-animate="fade-in-right" class="relative">
+      <div class="relative animate-on-scroll visible-delay-1">
+        <div class="absolute -inset-4 bg-gradient-to-r from-brand-blue/10 to-brand-amber/10 rounded-3xl blur-2xl" aria-hidden="true" />
         <Image
           src={aboutIllustration}
           alt="IT networking, connectivity, and security illustration"
           width={720}
           height={520}
-          class="w-full rounded-2xl shadow-xl ring-1 ring-gray-100 hover-lift"
+          class="relative w-full rounded-2xl shadow-xl ring-1 ring-black/5 dark:ring-white/10"
           loading="lazy"
         />
       </div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8 mt-10">
-      <div data-animate="fade-in-up" data-animate-delay="100" class="rounded-2xl bg-dark-card p-8 shadow-sm border border-dark-border hover-lift">
-        <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Mission</h3>
-        <p class="text-dark-muted leading-relaxed font-serif">{about.mission}</p>
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      {
+        site.stats.map((stat, i) => (
+          <div class:list={["animate-on-scroll", "text-center rounded-2xl bg-surface dark:bg-surface-dark-tertiary p-6 border border-border dark:border-border-dark shadow-sm transition-colors", i > 0 ? `visible-delay-${Math.min(i, 5)}` : ""]}>
+            <div class="text-3xl sm:text-4xl font-bold text-brand-blue dark:text-brand-blue mb-1">{stat.number}</div>
+            <div class="text-sm text-text-secondary dark:text-text-dark-secondary font-medium">{stat.label}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Mission + Values - Bento layout -->
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 rounded-2xl bg-surface dark:bg-surface-dark-tertiary p-8 md:p-10 border border-border dark:border-border-dark shadow-sm transition-colors animate-on-scroll">
+        <div class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-brand-blue/10 dark:bg-brand-blue/20 text-brand-blue mb-4">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-text-primary dark:text-text-dark-primary mb-3">Our Mission</h3>
+        <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed">{about.mission}</p>
       </div>
-      <div data-animate="fade-in-up" data-animate-delay="200" class="rounded-2xl bg-dark-card p-8 shadow-sm border border-dark-border hover-lift">
-        <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Values</h3>
-        <p class="text-dark-muted leading-relaxed font-serif">{about.values}</p>
+      <div class="rounded-2xl bg-surface dark:bg-surface-dark-tertiary p-8 md:p-10 border border-border dark:border-border-dark shadow-sm transition-colors animate-on-scroll visible-delay-1">
+        <div class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-brand-amber/10 dark:bg-brand-amber/20 text-brand-amber mb-4">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-text-primary dark:text-text-dark-primary mb-3">Our Values</h3>
+        <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed">{about.values}</p>
       </div>
     </div>
   </div>
