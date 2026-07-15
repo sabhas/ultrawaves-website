@@ -78,3 +78,24 @@ const localBusinessSchema = {
     <slot />
   </body>
 </html>
+
+<script>
+  const animateObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.animateDelay;
+          if (delay) {
+            setTimeout(() => entry.target.classList.add("animated"), Number(delay));
+          } else {
+            entry.target.classList.add("animated");
+          }
+          animateObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+  );
+
+  document.querySelectorAll("[data-animate]").forEach((el) => animateObserver.observe(el));
+</script>

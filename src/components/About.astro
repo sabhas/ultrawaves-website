@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 
 <section id="about" class="py-12 lg:py-16 bg-gray-50" aria-labelledby="about-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
+    <div data-animate="fade-in-up" class="text-center mb-10">
       <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">ABOUT</span>
       <h2 id="about-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
         Who We Are
@@ -14,7 +14,7 @@ import { Image } from "astro:assets";
     </div>
 
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <div class="space-y-5">
+      <div data-animate="fade-in-left" class="space-y-5">
         {
           about.paragraphs.map((p) => (
             <p class="text-gray-600 leading-relaxed font-serif text-base sm:text-lg">{p}</p>
@@ -22,24 +22,24 @@ import { Image } from "astro:assets";
         }
       </div>
 
-      <div class="relative">
+      <div data-animate="fade-in-right" class="relative">
         <Image
           src={aboutIllustration}
           alt="IT networking, connectivity, and security illustration"
           width={720}
           height={520}
-          class="w-full rounded-2xl shadow-xl ring-1 ring-gray-100"
+          class="w-full rounded-2xl shadow-xl ring-1 ring-gray-100 hover-lift"
           loading="lazy"
         />
       </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 mt-10">
-      <div class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+      <div data-animate="fade-in-up" data-animate-delay="100" class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100 hover-lift">
         <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Mission</h3>
         <p class="text-gray-600 leading-relaxed font-serif">{about.mission}</p>
       </div>
-      <div class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+      <div data-animate="fade-in-up" data-animate-delay="200" class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100 hover-lift">
         <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Values</h3>
         <p class="text-gray-600 leading-relaxed font-serif">{about.values}</p>
       </div>

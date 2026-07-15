@@ -7,7 +7,7 @@ import { Image } from "astro:assets";
 
 <header
   id="header"
-  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-shadow"
+  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between lg:h-20">
@@ -118,7 +118,12 @@ import { Image } from "astro:assets";
 
   window.addEventListener("scroll", () => {
     if (!header) return;
-    header.classList.toggle("shadow-md", window.scrollY > 10);
+    const scrolled = window.scrollY > 10;
+    header.classList.toggle("shadow-md", scrolled);
+    header.classList.toggle("!h-16", scrolled);
+    document.querySelectorAll("#header .nav-link").forEach((link) => {
+      link.classList.toggle("!text-sm", scrolled);
+    });
   });
 
   const sections = document.querySelectorAll("section[id]");

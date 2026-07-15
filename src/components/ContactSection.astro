@@ -6,13 +6,13 @@ import { Image } from "astro:assets";
 
 <section id="contact" class="py-12 lg:py-16 circuit-pattern" aria-labelledby="contact-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-8">
+    <div data-animate="fade-in-up" class="text-center mb-8">
       <Image
         src={logo}
         alt="Ultra Wave Technologies"
         width={550}
         height={539}
-        class="h-16 w-16 object-contain mx-auto mb-6"
+        class="h-16 w-16 object-contain mx-auto mb-6 animate-float-slow"
         loading="lazy"
       />
       <h2 id="contact-heading" class="text-2xl sm:text-3xl font-bold text-brand-blue font-serif">
@@ -21,9 +21,8 @@ import { Image } from "astro:assets";
     </div>
 
     <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-      <div class="space-y-6">
-        <div class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-          <h3 class="font-semibold text-gray-900 mb-6">Contact Information</h3>
+      <div data-animate="fade-in-left" class="space-y-6">
+        <div class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100 hover-lift">
 
           <div class="space-y-5">
             {
@@ -73,7 +72,7 @@ import { Image } from "astro:assets";
         </div>
       </div>
 
-      <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 min-h-[300px]">
+      <div data-animate="fade-in-right" class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 min-h-[300px] hover-lift">
         <iframe
           title="Ultra Wave Technologies location on Google Maps"
           src="https://maps.google.com/maps?q=Art+Tower+Al+Raffa+Dubai+UAE&output=embed"

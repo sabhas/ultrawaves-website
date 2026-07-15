@@ -44,3 +44,104 @@ body {
       transparent 50%
     );
 }
+
+/* ============ Scroll-Reveal Animations ============ */
+
+[data-animate] {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-animate="fade-in-up"] { transform: translateY(2.5rem); }
+[data-animate="fade-in-down"] { transform: translateY(-2.5rem); }
+[data-animate="fade-in-left"] { transform: translateX(-2.5rem); }
+[data-animate="fade-in-right"] { transform: translateX(2.5rem); }
+[data-animate="scale-in"] { transform: scale(0.9); }
+
+[data-animate].animated {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* ============ Floating & Hero Animations ============ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes circuit-dash {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float 4s ease-in-out 2s infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* ============ Interactive Hover Effects ============ */
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 86, 150, 0.12);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(232, 119, 34, 0.25);
+}
+
+/* ============ Button Pulse ============ */
+
+.btn-pulse {
+  position: relative;
+  overflow: hidden;
+}
+.btn-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+.btn-pulse:hover::after {
+  animation: shimmer 0.8s ease-out;
+}

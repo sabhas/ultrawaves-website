@@ -18,7 +18,7 @@ const icons: Record<string, string> = {
 
 <section id="services" class="py-12 lg:py-16" aria-labelledby="services-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
+    <div data-animate="fade-in-up" class="text-center mb-10">
       <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">OUR</span>
       <h2 id="services-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
         Services
@@ -30,12 +30,14 @@ const icons: Record<string, string> = {
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
       {
-        serviceOverview.map((service) => (
+        serviceOverview.map((service, i) => (
           <a
             href={`#${service.id}`}
-            class="group flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md hover:border-brand-blue/20 transition-all"
+            data-animate="fade-in-up"
+            data-animate-delay={i * 100}
+            class="group flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md hover:border-brand-blue/20 transition-all hover-lift"
           >
-            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-brand-blue/10 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-brand-blue/10 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all duration-300">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={icons[service.id] ?? icons.cabling} />
               </svg>

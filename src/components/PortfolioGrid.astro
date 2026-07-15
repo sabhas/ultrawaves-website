@@ -13,7 +13,7 @@ const images = await Promise.all(
 
 <section id="portfolio" class="py-12 lg:py-16 bg-gray-900 text-white" aria-labelledby="portfolio-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
+    <div data-animate="fade-in-up" class="text-center mb-10">
       <p class="text-brand-orange-light text-sm font-semibold tracking-widest uppercase mb-2">Network</p>
       <h2 id="portfolio-heading" class="text-3xl sm:text-4xl font-bold">
         Our Recent Work
@@ -25,8 +25,8 @@ const images = await Promise.all(
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {
-        images.map((item) => (
-          <figure class="group rounded-xl overflow-hidden bg-gray-800 shadow-lg">
+        images.map((item, i) => (
+          <figure data-animate="fade-in-up" data-animate-delay={i * 100} class="group rounded-xl overflow-hidden bg-gray-800 shadow-lg">
             <div class="aspect-[3/4] overflow-hidden bg-gray-950">
               <Image
                 src={item.src}
