@@ -13,64 +13,63 @@ const projectImages: Record<string, ImageMetadata> = {
 };
 ---
 
-<section id="projects" class="py-12 lg:py-16" aria-labelledby="projects-heading">
+<section id="projects" class="py-16 lg:py-24 bg-surface dark:bg-surface-dark transition-colors" aria-labelledby="projects-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">OUR</span>
-      <h2 id="projects-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
-        Projects
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">Case Studies</span>
+      <h2 id="projects-heading" class="section-heading">
+        Featured Projects
       </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
     </div>
 
     <div class="space-y-8">
-      {
-        projects.map((project, i) => {
-          const img = projectImages[project.id];
-          return (
-            <article
-              class:list={[
-                "flex flex-col gap-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm",
-                i % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row",
-              ]}
-            >
-              <div class="lg:w-2/5">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-gray-100 shadow-sm ring-1 ring-gray-200/80">
-                  {img && (
-                    <Image
-                      src={img}
-                      alt={`${project.title} — ${project.subtitle}`}
-                      widths={[400, 600, 900]}
-                      sizes="(min-width: 1024px) 40vw, 100vw"
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
+      {projects.map((project, i) => {
+        const img = projectImages[project.id];
+        return (
+          <article
+            class:list={[
+              "flex flex-col gap-8 rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark-secondary p-8 shadow-sm hover:shadow-md hover:shadow-brand-blue/5 dark:hover:shadow-brand-blue/10 transition-all duration-300",
+              i % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row",
+            ]}
+          >
+            <div class="lg:w-2/5 animate-on-scroll">
+              <div class="aspect-[4/3] overflow-hidden rounded-xl bg-surface-tertiary dark:bg-surface-dark shadow-sm ring-1 ring-black/5 dark:ring-white/10">
+                {img && (
+                  <Image
+                    src={img}
+                    alt={`${project.title} — ${project.subtitle}`}
+                    widths={[400, 600, 900]}
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                    loading="lazy"
+                  />
+                )}
               </div>
-              <div class="lg:w-3/5">
-                <h3 class="text-2xl font-bold text-brand-orange font-serif mb-1">{project.title}</h3>
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">{project.subtitle}</p>
-                <p class="text-gray-600 font-serif mb-4">{project.description}</p>
-                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Scope of Work</h4>
-                <ul class="space-y-2" role="list">
-                  {
-                    project.scope.map((item) => (
-                      <li class="flex items-start gap-2 text-gray-600 text-sm">
-                        <span class="text-brand-blue mt-0.5" aria-hidden="true">▸</span>
-                        {item}
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-            </article>
-          );
-        })
-      }
+            </div>
+            <div class="lg:w-3/5 animate-on-scroll visible-delay-1">
+              <h3 class="text-2xl font-bold text-text-primary dark:text-text-dark-primary mb-1">{project.title}</h3>
+              <p class="text-sm font-semibold text-brand-blue dark:text-brand-blue uppercase tracking-wider mb-3">{project.subtitle}</p>
+              <p class="text-text-secondary dark:text-text-dark-secondary mb-4 leading-relaxed">{project.description}</p>
+              <h4 class="text-xs font-bold text-text-primary dark:text-text-dark-primary uppercase tracking-wider mb-3">Scope of Work</h4>
+              <ul class="space-y-2" role="list">
+                {project.scope.map((item) => (
+                  <li class="flex items-start gap-2.5 text-sm text-text-secondary dark:text-text-dark-secondary">
+                    <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        );
+      })}
     </div>
 
-    <p class="text-center mt-12 text-gray-500 font-semibold tracking-widest uppercase">
-      And many more...
+    <p class="text-center mt-12 text-text-tertiary dark:text-text-dark-tertiary font-semibold tracking-widest uppercase text-sm">
+      And many more projects across Dubai
     </p>
   </div>
 </section>

@@ -1,0 +1,51 @@
+---
+import { testimonials } from "../content/testimonials";
+---
+
+<section id="testimonials" class="py-16 lg:py-24 bg-surface dark:bg-surface-dark transition-colors" aria-labelledby="testimonials-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">Client Feedback</span>
+      <h2 id="testimonials-heading" class="section-heading">
+        What Our Clients Say
+      </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 stagger-children" id="testimonials-grid">
+      {testimonials.map((t) => (
+        <figure class="relative rounded-2xl bg-surface-secondary dark:bg-surface-dark-secondary border border-border dark:border-border-dark p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+          <!-- Quote icon -->
+          <svg class="h-8 w-8 text-brand-blue/20 dark:text-brand-blue/10 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
+          </svg>
+          <blockquote>
+            <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed text-sm italic">
+              &ldquo;{t.quote}&rdquo;
+            </p>
+          </blockquote>
+          <figcaption class="mt-6 pt-4 border-t border-border dark:border-border-dark">
+            <div class="font-semibold text-text-primary dark:text-text-dark-primary text-sm">{t.name}</div>
+            <div class="text-text-tertiary dark:text-text-dark-tertiary text-xs mt-0.5">{t.title}, {t.company}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById("testimonials-grid");
+  if (grid) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(grid);
+  }
+</script>

@@ -7,10 +7,12 @@ import ServicesOverview from "../components/ServicesOverview.astro";
 import ServiceSection from "../components/ServiceSection.astro";
 import PortfolioGrid from "../components/PortfolioGrid.astro";
 import Projects from "../components/Projects.astro";
+import Testimonials from "../components/Testimonials.astro";
 import ClientLogos from "../components/ClientLogos.astro";
+import FAQ from "../components/FAQ.astro";
 import ContactSection from "../components/ContactSection.astro";
 import Footer from "../components/Footer.astro";
-import { services } from "../content/services";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 ---
 
 <BaseLayout>
@@ -19,11 +21,14 @@ import { services } from "../content/services";
     <Hero />
     <About />
     <ServicesOverview />
-    {services.map((service, index) => <ServiceSection service={service} index={index} />)}
+    <ServiceSection />
     <PortfolioGrid />
     <Projects />
+    <Testimonials />
     <ClientLogos />
+    <FAQ />
     <ContactSection />
   </main>
   <Footer />
+  <WhatsAppButton />
 </BaseLayout>

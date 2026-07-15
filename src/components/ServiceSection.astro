@@ -1,104 +1,289 @@
 ---
-import type { Service } from "../content/services";
+import { services } from "../content/services";
 import { Image } from "astro:assets";
 
-interface Props {
-  service: Service;
-  index: number;
+interface HeroImages {
+  [key: string]: Promise<{ default: import("astro").ImageMetadata }>;
 }
 
-const { service, index } = Astro.props;
-
-const heroImages: Record<string, ImageMetadata> = {
-  cabling: (await import("../assets/web/heroes/cabling.webp")).default,
-  cctv: (await import("../assets/web/heroes/cctv.webp")).default,
-  pabx: (await import("../assets/web/heroes/pabx.webp")).default,
-  wifi: (await import("../assets/web/heroes/wifi.webp")).default,
-  access: (await import("../assets/web/heroes/access.webp")).default,
-  intercom: (await import("../assets/web/heroes/intercom.webp")).default,
-  automation: (await import("../assets/web/heroes/automation.webp")).default,
-  amc: (await import("../assets/web/heroes/amc.webp")).default,
-  web: (await import("../assets/web/heroes/web.svg")).default,
-  marketing: (await import("../assets/web/heroes/marketing.svg")).default,
+const heroImages: HeroImages = {
+  cabling: import("../assets/web/heroes/cabling.webp"),
+  cctv: import("../assets/web/heroes/cctv.webp"),
+  pabx: import("../assets/web/heroes/pabx.webp"),
+  wifi: import("../assets/web/heroes/wifi.webp"),
+  access: import("../assets/web/heroes/access.webp"),
+  intercom: import("../assets/web/heroes/intercom.webp"),
+  automation: import("../assets/web/heroes/automation.webp"),
+  amc: import("../assets/web/heroes/amc.webp"),
+  web: import("../assets/web/heroes/web.svg"),
+  marketing: import("../assets/web/heroes/marketing.svg"),
 };
 
-const heroImg = heroImages[service.id];
+// Group services by category for visual organization
+const categories = [
+  {
+    name: "Infrastructure",
+    ids: ["cabling", "wifi"],
+  },
+  {
+    name: "Security",
+    ids: ["cctv", "access", "intercom"],
+  },
+  {
+    name: "Communication & Innovation",
+    ids: ["pabx", "automation"],
+  },
+  {
+    name: "Digital & Support",
+    ids: ["web", "marketing", "amc"],
+  },
+];
 ---
 
-<section
-  id={service.id}
-  class:list={["py-10 lg:py-14", index % 2 === 0 ? "bg-white" : "bg-gray-50"]}
-  aria-labelledby={`${service.id}-heading`}
->
+<section id="services-detail" class="py-16 lg:py-24 bg-surface-secondary dark:bg-surface-dark-secondary transition-colors" aria-label="Service details">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="relative mb-8 overflow-hidden rounded-2xl shadow-lg ring-1 ring-gray-200/80">
-      {
-        heroImg && (
-          <Image
-            src={heroImg}
-            alt=""
-            width={1200}
-            height={700}
-            class="block w-full h-auto"
-            loading="lazy"
-          />
-        )
-      }
-      <h2 id={`${service.id}-heading`} class="sr-only">
-        {service.title}
-        {service.subtitle ? ` — ${service.subtitle}` : ""}
+    <div class="text-center mb-12 animate-on-scroll">
+      <span class="section-label">Explore</span>
+      <h2 class="section-heading">
+        Service Details
       </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
     </div>
 
-    <div class="max-w-4xl">
-      <p class="text-gray-600 leading-relaxed font-serif text-base sm:text-lg mb-8">
-        {service.description}
-      </p>
+    <!-- Category Tabs (mobile: scrollable pills, desktop: centered) -->
+    <div class="flex overflow-x-auto gap-2 pb-4 mb-8 scrollbar-hide justify-start lg:justify-center animate-on-scroll" id="category-tabs">
+      {categories.map((cat, i) => (
+        <button
+          data-category={cat.name}
+          class="category-tab shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 border"
+          class:list={[
+            i === 0
+              ? "bg-brand-navy dark:bg-brand-blue text-white border-brand-navy dark:border-brand-blue"
+              : "bg-surface dark:bg-surface-dark-secondary text-text-secondary dark:text-text-dark-secondary border-border dark:border-border-dark hover:border-brand-blue/50 dark:hover:border-brand-blue/50",
+          ]}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
 
-      {
-        service.bullets && (
-          <div class="mb-8">
-            <h3 class="section-heading text-lg mb-4 uppercase">Network Cabling Services</h3>
-            <ul class="space-y-2" role="list">
-              {
-                service.bullets.map((bullet) => (
-                  <li class="flex items-start gap-3 text-gray-700">
-                    <span class="mt-1.5 h-2 w-2 rounded-full bg-brand-orange shrink-0" aria-hidden="true" />
-                    {bullet}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        )
-      }
+    <!-- Service Pills within selected category -->
+    <div class="flex flex-wrap gap-2 mb-10 justify-center animate-on-scroll visible-delay-1" id="service-pills-container">
+      {services.map((service, i) => (
+        <button
+          data-service-id={service.id}
+          class="service-pill shrink-0 rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-300 border"
+          class:list={[
+            i === 0
+              ? "bg-brand-blue/10 text-brand-blue border-brand-blue/30 dark:bg-brand-blue/20 dark:text-brand-blue dark:border-brand-blue/40"
+              : "bg-surface dark:bg-surface-dark text-text-tertiary dark:text-text-dark-tertiary border-transparent hover:border-border dark:hover:border-border-dark",
+          ]}
+        >
+          {service.title}
+        </button>
+      ))}
+    </div>
 
-      {
-        service.highlights && (
-          <div class="mb-8 space-y-3">
-            {
-              service.highlights.map((h) => (
-                <p class="text-gray-700 pl-4 border-l-4 border-brand-orange font-serif">{h}</p>
-              ))
-            }
-          </div>
-        )
-      }
-
-      {
-        service.features && (
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {
-              service.features.map((feature) => (
-                <div class="rounded-xl bg-white border border-gray-100 p-6 shadow-sm">
-                  <h3 class="font-semibold text-brand-orange mb-2">{feature.title}</h3>
-                  <p class="text-sm text-gray-600 leading-relaxed">{feature.description}</p>
+    <!-- Content Area -->
+    <div class="max-w-5xl mx-auto">
+      {services.map((service) => {
+        const imgPromise = heroImages[service.id];
+        return (
+          <div
+            data-panel-id={service.id}
+            class="service-panel hidden"
+          >
+            <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+              <!-- Hero image -->
+              <div class="lg:col-span-2 animate-on-scroll">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
+                  {imgPromise && (
+                    <Image
+                      src={imgPromise}
+                      alt=""
+                      width={800}
+                      height={600}
+                      class="block w-full h-auto object-cover aspect-[4/3]"
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" aria-hidden="true" />
                 </div>
-              ))
-            }
+              </div>
+
+              <!-- Content -->
+              <div class="lg:col-span-3 animate-on-scroll visible-delay-1">
+                <h3 class="text-2xl sm:text-3xl font-bold text-text-primary dark:text-text-dark-primary mb-2">
+                  {service.title}
+                </h3>
+                {service.subtitle && (
+                  <p class="text-sm font-semibold text-brand-blue dark:text-brand-blue uppercase tracking-wider mb-4">
+                    {service.subtitle}
+                  </p>
+                )}
+
+                <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed mb-6">
+                  {service.description}
+                </p>
+
+                <!-- Bullets -->
+                {service.bullets && (
+                  <div class="mb-6">
+                    <h4 class="text-sm font-bold text-text-primary dark:text-text-dark-primary uppercase tracking-wider mb-3">What we offer</h4>
+                    <ul class="space-y-2" role="list">
+                      {service.bullets.map((bullet) => (
+                        <li class="flex items-start gap-3 text-sm text-text-secondary dark:text-text-dark-secondary">
+                          <svg class="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                          </svg>
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <!-- Highlights -->
+                {service.highlights && (
+                  <div class="mb-6 space-y-3">
+                    {service.highlights.map((h) => (
+                      <p class="text-text-secondary dark:text-text-dark-secondary pl-4 border-l-2 border-brand-amber text-sm leading-relaxed">
+                        {h}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                <!-- Features grid -->
+                {service.features && (
+                  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                    {service.features.map((feature) => (
+                      <div class="rounded-xl bg-surface dark:bg-surface-dark border border-border dark:border-border-dark p-5 shadow-sm transition-colors hover:border-brand-blue/30 dark:hover:border-brand-blue/40">
+                        <h4 class="font-semibold text-brand-blue dark:text-brand-blue text-sm mb-1.5">{feature.title}</h4>
+                        <p class="text-xs text-text-secondary dark:text-text-dark-secondary leading-relaxed">{feature.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        )
-      }
+        );
+      })}
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    const container = document.getElementById("services-detail");
+    if (!container) return;
+
+    const panels = container.querySelectorAll(".service-panel");
+    const pills = container.querySelectorAll(".service-pill");
+    const catTabs = container.querySelectorAll(".category-tab");
+
+    // ── Category definitions ──
+    const categories = [
+      { name: "Infrastructure", ids: ["cabling", "wifi"] },
+      { name: "Security", ids: ["cctv", "access", "intercom"] },
+      { name: "Communication & Innovation", ids: ["pabx", "automation"] },
+      { name: "Digital & Support", ids: ["web", "marketing", "amc"] },
+    ];
+
+    // Show the first service by default
+    let activeService = "cabling";
+
+    function activateService(id) {
+      activeService = id;
+
+      // Panels
+      panels.forEach((panel) => {
+        const isActive = panel.dataset.panelId === id;
+        panel.classList.toggle("hidden", !isActive);
+        if (isActive) {
+          // Trigger animation
+          panel.querySelectorAll(".animate-on-scroll").forEach((el) => {
+            el.classList.add("visible");
+          });
+        }
+      });
+
+      // Pills
+      pills.forEach((pill) => {
+        const isActive = pill.dataset.serviceId === id;
+        pill.classList.toggle("bg-brand-blue/10", isActive);
+        pill.classList.toggle("text-brand-blue", isActive);
+        pill.classList.toggle("border-brand-blue/30", isActive);
+        pill.classList.toggle("dark:bg-brand-blue/20", isActive);
+        pill.classList.toggle("dark:text-brand-blue", isActive);
+        pill.classList.toggle("dark:border-brand-blue/40", isActive);
+        pill.classList.toggle("bg-surface", !isActive);
+        pill.classList.toggle("dark:bg-surface-dark", !isActive);
+        pill.classList.toggle("text-text-tertiary", !isActive);
+        pill.classList.toggle("dark:text-text-dark-tertiary", !isActive);
+        pill.classList.toggle("border-transparent", !isActive);
+      });
+
+      // Update category tab highlight
+      catTabs.forEach((tab) => {
+        const catName = tab.dataset.category;
+        const cat = categories.find((c) => c.name === catName);
+        const isActiveCat = cat?.ids.includes(id);
+
+        tab.classList.toggle("bg-brand-navy", isActiveCat);
+        tab.classList.toggle("dark:bg-brand-blue", isActiveCat);
+        tab.classList.toggle("text-white", isActiveCat);
+        tab.classList.toggle("border-brand-navy", isActiveCat);
+        tab.classList.toggle("dark:border-brand-blue", isActiveCat);
+        tab.classList.toggle("bg-surface", !isActiveCat);
+        tab.classList.toggle("dark:bg-surface-dark-secondary", !isActiveCat);
+        tab.classList.toggle("text-text-secondary", !isActiveCat);
+        tab.classList.toggle("dark:text-text-dark-secondary", !isActiveCat);
+        tab.classList.toggle("border-border", !isActiveCat);
+        tab.classList.toggle("dark:border-border-dark", !isActiveCat);
+      });
+    }
+
+    // Click on pill
+    pills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const id = pill.dataset.serviceId;
+        if (id && id !== activeService) {
+          activateService(id);
+        }
+      });
+    });
+
+    // Click on category tab → activate first service in that category
+    catTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const catName = tab.dataset.category;
+        const cat = categories.find((c) => c.name === catName);
+        if (cat && cat.ids.length > 0) {
+          const firstId = cat.ids[0];
+          if (firstId !== activeService) {
+            activateService(firstId);
+          }
+        }
+      });
+    });
+
+    // Activate default
+    activateService("cabling");
+
+    // IntersectionObserver for the section itself
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll(".animate-on-scroll").forEach((el) => {
+            el.classList.add("visible");
+          });
+          sectionObserver.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    sectionObserver.observe(container);
+  })();
+</script>

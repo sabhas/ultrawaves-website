@@ -14,45 +14,85 @@ const icons: Record<string, string> = {
   web: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9",
   marketing: "M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z",
 };
+
+const categories: Record<string, { label: string; color: string }> = {
+  cabling: { label: "Infrastructure", color: "bg-brand-blue/10 text-brand-blue dark:bg-brand-blue/20" },
+  cctv: { label: "Security", color: "bg-brand-amber/10 text-brand-amber dark:bg-brand-amber/20" },
+  pabx: { label: "Communication", color: "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20" },
+  wifi: { label: "Infrastructure", color: "bg-brand-blue/10 text-brand-blue dark:bg-brand-blue/20" },
+  access: { label: "Security", color: "bg-brand-amber/10 text-brand-amber dark:bg-brand-amber/20" },
+  intercom: { label: "Security", color: "bg-brand-amber/10 text-brand-amber dark:bg-brand-amber/20" },
+  automation: { label: "Innovation", color: "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20" },
+  amc: { label: "Support", color: "bg-brand-blue/10 text-brand-blue dark:bg-brand-blue/20" },
+  web: { label: "Digital", color: "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20" },
+  marketing: { label: "Digital", color: "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20" },
+};
 ---
 
-<section id="services" class="py-12 lg:py-16" aria-labelledby="services-heading">
+<section id="services" class="py-16 lg:py-24 bg-surface dark:bg-surface-dark transition-colors" aria-labelledby="services-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">OUR</span>
-      <h2 id="services-heading" class="text-3xl sm:text-4xl font-bold text-brand-blue -mt-8 sm:-mt-12 relative">
-        Services
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">What We Do</span>
+      <h2 id="services-heading" class="section-heading">
+        Our Services
       </h2>
-      <p class="mt-4 text-gray-600 max-w-2xl mx-auto font-serif">
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+      <p class="mt-6 text-text-secondary dark:text-text-dark-secondary max-w-2xl mx-auto text-lg">
         Comprehensive IT and networking solutions designed to empower your business.
       </p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 stagger-children" id="services-grid">
       {
-        serviceOverview.map((service) => (
-          <a
-            href={`#${service.id}`}
-            class="group flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md hover:border-brand-blue/20 transition-all"
-          >
-            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-brand-blue/10 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors">
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={icons[service.id] ?? icons.cabling} />
-              </svg>
-            </div>
-            <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-brand-blue transition-colors">
-              {service.title}
-            </h3>
-            <p class="text-sm text-gray-500 leading-relaxed flex-1">{service.description}</p>
-            <span class="mt-4 text-sm font-medium text-brand-orange group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-              Learn more
-              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          </a>
-        ))
+        serviceOverview.map((service) => {
+          const cat = categories[service.id] ?? { label: "General", color: "bg-gray-100 text-gray-600" };
+          return (
+            <a
+              href={`#${service.id}`}
+              class="group relative flex flex-col rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark-secondary p-6 shadow-sm hover:shadow-xl hover:shadow-brand-blue/5 dark:hover:shadow-brand-blue/10 hover:-translate-y-1 hover:border-brand-blue/30 dark:hover:border-brand-blue/40 transition-all duration-300"
+            >
+              <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-navy/5 dark:bg-white/5 text-brand-navy dark:text-brand-blue group-hover:bg-brand-blue group-hover:text-white dark:group-hover:bg-brand-blue dark:group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-brand-blue/20">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={icons[service.id] ?? icons.cabling} />
+                </svg>
+              </div>
+
+              <span class={cat.color + " inline-flex self-start items-center rounded-full px-2.5 py-0.5 text-xs font-medium mb-3"}>
+                {cat.label}
+              </span>
+
+              <h3 class="font-semibold text-text-primary dark:text-text-dark-primary mb-2 group-hover:text-brand-blue dark:group-hover:text-brand-blue transition-colors">
+                {service.title}
+              </h3>
+              <p class="text-sm text-text-secondary dark:text-text-dark-secondary leading-relaxed flex-1">{service.description}</p>
+
+              <span class="mt-4 text-sm font-medium text-text-tertiary dark:text-text-dark-tertiary group-hover:text-brand-blue dark:group-hover:text-brand-blue transition-all inline-flex items-center gap-1.5">
+                Learn more
+                <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          );
+        })
       }
     </div>
   </div>
 </section>
+
+<script>
+  // Stagger animation for service cards
+  const grid = document.getElementById("services-grid");
+  if (grid) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(grid);
+  }
+</script>
