@@ -1,3 +1,6 @@
-name = "ultrawaves-website"
+name = "ultrawaves-sadaf"
 compatibility_date = "2025-06-07"
 pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
