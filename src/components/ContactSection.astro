@@ -23,110 +23,136 @@ import { Image } from "astro:assets";
       <div class="lg:col-span-3 animate-on-scroll">
         <div class="rounded-2xl bg-surface dark:bg-surface-dark-secondary border border-border dark:border-border-dark p-8 shadow-sm">
           <h3 class="text-xl font-bold text-text-primary dark:text-text-dark-primary mb-6">Send us a Message</h3>
-          <form id="contact-form" class="space-y-5">
-            <input type="hidden" id="form-email-to" value={site.email} />
-            <div class="grid sm:grid-cols-2 gap-5">
-              <div class="relative">
-                <input
-                  type="text"
-                  id="form-name"
-                  name="name"
-                  required
-                  placeholder=" "
-                  class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
-                />
-                <label
-                  for="form-name"
-                  class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
-                >
-                  Full Name *
-                </label>
+            <form id="contact-form" class="space-y-5" novalidate>
+              <input type="hidden" name="_access_key" value="YOUR_ACCESS_KEY" />
+              <input type="hidden" name="_subject" value="New Inquiry from Ultra Wave Website" />
+              <input type="hidden" name="_template" value="box" />
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div class="relative">
+                  <input
+                    type="text"
+                    id="form-name"
+                    name="name"
+                    required
+                    placeholder=" "
+                    class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                    data-validate
+                  />
+                  <label
+                    for="form-name"
+                    class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
+                  >
+                    Full Name *
+                  </label>
+                  <p class="form-error text-xs text-red-500 mt-1 hidden">Please enter your name</p>
+                </div>
+                <div class="relative">
+                  <input
+                    type="email"
+                    id="form-email"
+                    name="email"
+                    required
+                    placeholder=" "
+                    class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                    data-validate
+                  />
+                  <label
+                    for="form-email"
+                    class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
+                  >
+                    Email Address *
+                  </label>
+                  <p class="form-error text-xs text-red-500 mt-1 hidden">Please enter a valid email</p>
+                </div>
               </div>
-              <div class="relative">
-                <input
-                  type="email"
-                  id="form-email"
-                  name="email"
-                  required
-                  placeholder=" "
-                  class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
-                />
-                <label
-                  for="form-email"
-                  class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
-                >
-                  Email Address *
-                </label>
-              </div>
-            </div>
 
-            <div class="grid sm:grid-cols-2 gap-5">
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div class="relative">
+                  <input
+                    type="tel"
+                    id="form-phone"
+                    name="phone"
+                    placeholder=" "
+                    class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                  />
+                  <label
+                    for="form-phone"
+                    class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
+                  >
+                    Phone Number
+                  </label>
+                </div>
+                <div class="relative">
+                  <select
+                    id="form-service"
+                    name="service"
+                    required
+                    class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all appearance-none"
+                  >
+                    <option value="" selected disabled></option>
+                    {services.map((s) => (
+                      <option value={s.id}>{s.title}</option>
+                    ))}
+                    <option value="other">Other</option>
+                  </select>
+                  <label
+                    for="form-service"
+                    class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:valid]:top-2 peer-[:valid]:text-xs"
+                  >
+                    Service Interested In
+                  </label>
+                  <svg class="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-text-tertiary pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
               <div class="relative">
-                <input
-                  type="tel"
-                  id="form-phone"
-                  name="phone"
+                <textarea
+                  id="form-message"
+                  name="message"
+                  rows={4}
+                  required
                   placeholder=" "
-                  class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
-                />
+                  class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all resize-none"
+                  data-validate
+                ></textarea>
                 <label
-                  for="form-phone"
+                  for="form-message"
                   class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
                 >
-                  Phone Number
+                  Your Message *
                 </label>
+                <p class="form-error text-xs text-red-500 mt-1 hidden">Please enter your message</p>
               </div>
-              <div class="relative">
-                <select
-                  id="form-service"
-                  name="service"
-                  required
-                  class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all appearance-none"
-                >
-                  <option value="" selected disabled></option>
-                  {services.map((s) => (
-                    <option value={s.id}>{s.title}</option>
-                  ))}
-                  <option value="other">Other</option>
-                </select>
-                <label
-                  for="form-service"
-                  class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:valid]:top-2 peer-[:valid]:text-xs"
-                >
-                  Service Interested In
-                </label>
-                <svg class="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-text-tertiary pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
 
-            <div class="relative">
-              <textarea
-                id="form-message"
-                name="message"
-                rows={4}
-                required
-                placeholder=" "
-                class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all resize-none"
-              ></textarea>
-              <label
-                for="form-message"
-                class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-text-tertiary"
+              <button
+                type="submit"
+                id="form-submit-btn"
+                class="relative w-full rounded-lg bg-brand-navy dark:bg-brand-blue px-6 py-3 text-sm font-semibold text-white hover:bg-brand-navy-dark dark:hover:bg-brand-blue-dark transition-all shadow-lg shadow-brand-navy/20 dark:shadow-brand-blue/20 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
               >
-                Your Message *
-              </label>
-            </div>
+                <span id="submit-text" class="inline-flex items-center justify-center gap-2">
+                  Send Message
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </span>
+                <span id="submit-spinner" class="hidden absolute inset-0 flex items-center justify-center">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                </span>
+                <span id="submit-success" class="hidden absolute inset-0 flex items-center justify-center gap-2 text-white">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                  </svg>
+                  Sent!
+                </span>
+              </button>
 
-            <button
-              type="submit"
-              class="w-full rounded-lg bg-brand-navy dark:bg-brand-blue px-6 py-3 text-sm font-semibold text-white hover:bg-brand-navy-dark dark:hover:bg-brand-blue-dark transition-all shadow-lg shadow-brand-navy/20 dark:shadow-brand-blue/20 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Send Message
-            </button>
-
-            <p id="form-status" class="text-sm text-center hidden"></p>
-          </form>
+              <p id="form-status" class="text-sm text-center hidden"></p>
+            </form>
         </div>
       </div>
 
@@ -203,43 +229,148 @@ import { Image } from "astro:assets";
   </div>
 </section>
 
+<style>
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 50%, 90% { transform: translateX(-4px); }
+    30%, 70% { transform: translateX(4px); }
+  }
+  .input-error {
+    border-color: #ef4444 !important;
+    animation: shake 0.5s ease;
+  }
+  .dark .input-error {
+    border-color: #f87171 !important;
+  }
+  .input-error:focus {
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3) !important;
+  }
+  @keyframes draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+  #submit-success svg path {
+    stroke-dasharray: 16;
+    stroke-dashoffset: 16;
+    animation: draw-check 0.4s ease forwards;
+  }
+</style>
+
 <script>
   (function () {
     const form = document.getElementById("contact-form");
     const status = document.getElementById("form-status");
+    const submitBtn = document.getElementById("form-submit-btn");
+    const submitText = document.getElementById("submit-text");
+    const submitSpinner = document.getElementById("submit-spinner");
+    const submitSuccess = document.getElementById("submit-success");
     if (!form) return;
 
+    // ── Utility: validate a single field ──
+    function validateField(field) {
+      const errorEl = field.parentElement.querySelector(".form-error");
+      const isValid = field.checkValidity();
+      field.classList.toggle("input-error", !isValid);
+      if (errorEl) errorEl.classList.toggle("hidden", isValid);
+      return isValid;
+    }
+
+    // ── Validate all required fields ──
+    function validateAll() {
+      let valid = true;
+      form.querySelectorAll("[data-validate]").forEach((field) => {
+        if (!validateField(field)) valid = false;
+      });
+      // Select: check if valid value
+      const service = document.getElementById("form-service");
+      if (service && !service.value) {
+        service.classList.add("input-error");
+        valid = false;
+      } else if (service) {
+        service.classList.remove("input-error");
+      }
+      return valid;
+    }
+
+    // ── Clear error on input ──
+    form.querySelectorAll("[data-validate]").forEach((field) => {
+      field.addEventListener("input", () => {
+        field.classList.remove("input-error");
+        const errorEl = field.parentElement.querySelector(".form-error");
+        if (errorEl) errorEl.classList.add("hidden");
+      });
+    });
+    const serviceSelect = document.getElementById("form-service");
+    serviceSelect?.addEventListener("change", () => serviceSelect.classList.remove("input-error"));
+
+    // ── Submit ──
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const submitBtn = form.querySelector('button[type="submit"]');
+      // Reset states
+      status.classList.add("hidden");
+      status.classList.remove("text-green-600", "text-red-600");
+
+      // Validate
+      if (!validateAll()) return;
+
+      // Show loading
       submitBtn.disabled = true;
-      submitBtn.textContent = "Sending...";
-      status.classList.remove("hidden", "text-green-600", "text-red-600");
+      submitText.classList.add("hidden");
+      submitSpinner.classList.remove("hidden");
+      submitSuccess.classList.add("hidden");
 
-      // Build mailto link as a static fallback
-      const name = document.getElementById("form-name").value;
-      const email = document.getElementById("form-email").value;
-      const phone = document.getElementById("form-phone").value;
-      const service = document.getElementById("form-service").value;
-      const message = document.getElementById("form-message").value;
+      // Collect data
+      const formData = new FormData(form);
 
-      const subject = encodeURIComponent(`New Inquiry from ${name} — Ultra Wave Website`);
-      const body = encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\n\nMessage:\n${message}`
-      );
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData,
+        });
 
-      // Open email client as form submission (static site fallback)
-      const siteEmailInput = document.getElementById("form-email-to");
-      const siteEmail = siteEmailInput ? siteEmailInput.value : "ultrawavetechnologyllc@gmail.com";
-      window.location.href = `mailto:${siteEmail}?subject=${subject}&body=${body}`;
+        const data = await response.json();
 
-      status.textContent = "Thank you! Your message has been sent. We'll get back to you shortly.";
-      status.classList.remove("hidden", "text-red-600");
-      status.classList.add("text-green-600");
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send Message";
-      form.reset();
+        if (data.success) {
+          // Show success state
+          submitSpinner.classList.add("hidden");
+          submitSuccess.classList.remove("hidden");
+
+          status.textContent = "Thank you! Your message has been sent. We'll get back to you within 24 hours.";
+          status.classList.remove("hidden", "text-red-600");
+          status.classList.add("text-green-600");
+          form.reset();
+
+          // Reset button after delay
+          setTimeout(() => {
+            submitSuccess.classList.add("hidden");
+            submitText.classList.remove("hidden");
+            submitBtn.disabled = false;
+          }, 3000);
+        } else {
+          throw new Error(data.message || "Form submission failed");
+        }
+      } catch (err) {
+        // Fallback: mailto
+        const name = document.getElementById("form-name").value;
+        const email = document.getElementById("form-email").value;
+        const phone = document.getElementById("form-phone").value;
+        const service = serviceSelect?.value || "";
+        const message = document.getElementById("form-message").value;
+
+        const subject = encodeURIComponent(`New Inquiry from ${name} — Ultra Wave Website`);
+        const body = encodeURIComponent(
+          `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\n\nMessage:\n${message}`
+        );
+
+        window.location.href = `mailto:ultrawavetechnologyllc@gmail.com?subject=${subject}&body=${body}`;
+
+        status.textContent = "Thank you! Your message has been sent. We'll get back to you shortly.";
+        status.classList.remove("hidden", "text-red-600");
+        status.classList.add("text-green-600");
+        submitSpinner.classList.add("hidden");
+        submitText.classList.remove("hidden");
+        submitBtn.disabled = false;
+      }
     });
   })();
 </script>

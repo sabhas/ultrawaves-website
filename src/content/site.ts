@@ -28,10 +28,10 @@ export const site = {
     { platform: "Facebook", url: "[Add Facebook URL]" },
   ],
   stats: [
-    { number: "[Add]", label: "Years Experience" },
-    { number: "[Add]", label: "Projects Delivered" },
-    { number: "[Add]", label: "Happy Clients" },
-    { number: "[Add]", label: "Support" },
+    { number: "X", label: "Years Experience" },
+    { number: "X", label: "Projects Delivered" },
+    { number: "X", label: "Happy Clients" },
+    { number: "X", label: "Support" },
   ],
 } as const;
 
