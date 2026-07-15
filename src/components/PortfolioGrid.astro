@@ -24,15 +24,15 @@ const images = await Promise.all(
       </p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children" id="portfolio-grid">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
       {images.map((item) => (
         <button
           data-index={item.index}
           data-caption={item.caption}
-          class="portfolio-item group relative rounded-xl overflow-hidden bg-surface-dark-secondary shadow-lg text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
+          class="portfolio-item group relative rounded-xl overflow-hidden bg-surface-dark-secondary shadow-lg text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue opacity-0 translate-y-6"
           aria-label={`View ${item.caption}`}
         >
-          <div class="aspect-[3/4] overflow-hidden">
+          <div class="aspect-[3/4] overflow-hidden img-shimmer">
             <Image
               src={item.src}
               alt={item.caption}
@@ -57,52 +57,80 @@ const images = await Promise.all(
   <!-- Lightbox Modal -->
   <div
     id="lightbox"
-    class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+    class="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300"
     role="dialog"
     aria-modal="true"
     aria-label="Image viewer"
   >
-    <button
-      id="lightbox-close"
-      class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-      aria-label="Close viewer"
+    <div
+      id="lightbox-content"
+      class="max-w-4xl max-h-[85vh] w-full transform scale-95 transition-transform duration-300"
     >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+      <button
+        id="lightbox-close"
+        class="absolute -top-12 right-0 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        aria-label="Close viewer"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
-    <button
-      id="lightbox-prev"
-      class="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-      aria-label="Previous image"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
+      <button
+        id="lightbox-prev"
+        class="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        aria-label="Previous image"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-    <button
-      id="lightbox-next"
-      class="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-      aria-label="Next image"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
+      <button
+        id="lightbox-next"
+        class="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        aria-label="Next image"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
 
-    <div class="max-w-4xl max-h-[85vh] w-full">
-      <img id="lightbox-img" src="" alt="" class="w-full h-full object-contain rounded-2xl" />
-      <p id="lightbox-caption" class="text-white/70 text-sm text-center mt-4 font-medium"></p>
+      <div class="relative">
+        <img id="lightbox-img" src="" alt="" class="w-full h-full object-contain rounded-2xl" />
+        <p id="lightbox-caption" class="text-white/70 text-sm text-center mt-4 font-medium"></p>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
   (function () {
+    // ── Portfolio item reveal with stagger ──
     const items = document.querySelectorAll(".portfolio-item");
+    const grid = document.getElementById("portfolio-grid");
+    if (grid && items.length > 0) {
+      const gridObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            items.forEach((item, i) => {
+              setTimeout(() => {
+                item.style.transition = "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
+                item.style.opacity = "1";
+                item.style.transform = "translateY(0)";
+              }, i * 80);
+            });
+            gridObserver.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      gridObserver.observe(grid);
+    }
+
+    // ── Lightbox ──
     const lightbox = document.getElementById("lightbox");
+    const lightboxContent = document.getElementById("lightbox-content");
     const lightboxImg = document.getElementById("lightbox-img");
     const lightboxCaption = document.getElementById("lightbox-caption");
     const closeBtn = document.getElementById("lightbox-close");
@@ -110,7 +138,6 @@ const images = await Promise.all(
     const nextBtn = document.getElementById("lightbox-next");
     let currentIndex = 0;
 
-    // Build image data array from the items
     const imageData = Array.from(items).map((item) => {
       const img = item.querySelector("img");
       const caption = item.dataset.caption || "";
@@ -124,14 +151,17 @@ const images = await Promise.all(
       lightboxImg.src = data.src;
       lightboxImg.alt = data.caption;
       lightboxCaption.textContent = data.caption;
-      lightbox.classList.remove("hidden");
-      lightbox.classList.add("flex");
+      // Open with animation
+      lightbox.classList.remove("pointer-events-none");
+      lightbox.classList.remove("opacity-0");
+      lightboxContent?.classList.remove("scale-95");
       document.body.style.overflow = "hidden";
     }
 
     function closeLightbox() {
-      lightbox.classList.add("hidden");
-      lightbox.classList.remove("flex");
+      lightbox.classList.add("opacity-0");
+      lightboxContent?.classList.add("scale-95");
+      lightbox.classList.add("pointer-events-none");
       document.body.style.overflow = "";
     }
 
@@ -156,32 +186,16 @@ const images = await Promise.all(
     prevBtn?.addEventListener("click", prevImage);
     nextBtn?.addEventListener("click", nextImage);
 
-    // Keyboard navigation
     document.addEventListener("keydown", (e) => {
-      if (lightbox?.classList.contains("hidden")) return;
+      if (lightbox?.classList.contains("opacity-0") && !lightbox?.classList.contains("pointer-events-none")) return;
+      if (lightbox?.classList.contains("pointer-events-none")) return;
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowLeft") prevImage();
       if (e.key === "ArrowRight") nextImage();
     });
 
-    // Click outside image to close
     lightbox?.addEventListener("click", (e) => {
       if (e.target === lightbox) closeLightbox();
     });
-
-    // Stagger animation for portfolio grid
-    const grid = document.getElementById("portfolio-grid");
-    if (grid) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        },
-        { threshold: 0.1 }
-      );
-      observer.observe(grid);
-    }
   })();
 </script>

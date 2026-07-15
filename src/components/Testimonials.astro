@@ -2,7 +2,7 @@
 import { testimonials } from "../content/testimonials";
 ---
 
-<section id="testimonials" class="py-16 lg:py-24 bg-surface dark:bg-surface-dark transition-colors" aria-labelledby="testimonials-heading">
+<section id="testimonials" class="py-16 lg:py-24 bg-surface dark:bg-surface-dark transition-colors overflow-x-hidden" aria-labelledby="testimonials-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
       <span class="section-label">Client Feedback</span>
@@ -12,40 +12,240 @@ import { testimonials } from "../content/testimonials";
       <span class="heading-accent mx-auto" aria-hidden="true" />
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6 stagger-children" id="testimonials-grid">
-      {testimonials.map((t) => (
-        <figure class="relative rounded-2xl bg-surface-secondary dark:bg-surface-dark-secondary border border-border dark:border-border-dark p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-          <!-- Quote icon -->
-          <svg class="h-8 w-8 text-brand-blue/20 dark:text-brand-blue/10 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
-          </svg>
-          <blockquote>
-            <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed text-sm italic">
-              &ldquo;{t.quote}&rdquo;
-            </p>
-          </blockquote>
-          <figcaption class="mt-6 pt-4 border-t border-border dark:border-border-dark">
-            <div class="font-semibold text-text-primary dark:text-text-dark-primary text-sm">{t.name}</div>
-            <div class="text-text-tertiary dark:text-text-dark-tertiary text-xs mt-0.5">{t.title}, {t.company}</div>
-          </figcaption>
-        </figure>
-      ))}
+    <!-- Carousel container -->
+    <div class="relative max-w-3xl mx-auto animate-on-scroll" id="testimonials-carousel">
+      <div class="relative overflow-hidden rounded-2xl">
+        {testimonials.map((t, i) => (
+          <figure
+            class="testimonial-slide rounded-2xl bg-surface-secondary dark:bg-surface-dark-secondary border border-border dark:border-border-dark p-8 md:p-10 shadow-sm"
+            data-index={i}
+          >
+            <!-- Quote icon -->
+            <svg class="h-8 w-8 text-brand-blue/20 dark:text-brand-blue/10 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
+            </svg>
+            <blockquote>
+              <p class="text-text-secondary dark:text-text-dark-secondary leading-relaxed text-base md:text-lg italic">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 pt-4 border-t border-border dark:border-border-dark">
+              <div class="font-semibold text-text-primary dark:text-text-dark-primary">{t.name}</div>
+              <div class="text-text-tertiary dark:text-text-dark-tertiary text-sm mt-0.5">{t.title}, {t.company}</div>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <!-- Navigation dots -->
+      <div class="flex justify-center gap-2 mt-6" id="testimonial-dots">
+        {testimonials.map((_, i) => (
+          <button
+            class="testimonial-dot w-2.5 h-2.5 rounded-full transition-all duration-300"
+            data-index={i}
+            aria-label={`Go to testimonial ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <!-- Prev / Next arrows -->
+      <button class="testimonial-arrow testimonial-arrow-prev" aria-label="Previous testimonial">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button class="testimonial-arrow testimonial-arrow-next" aria-label="Next testimonial">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   </div>
 </section>
 
+<style>
+  /* Carousel slides */
+  .testimonial-slide {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(12px) scale(0.97);
+    pointer-events: none;
+  }
+  .testimonial-slide.active {
+    opacity: 1;
+    position: relative;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    z-index: 1;
+  }
+  .testimonial-slide.exit {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+  }
+
+  /* Dots */
+  .testimonial-dot {
+    background: var(--color-border);
+    cursor: pointer;
+  }
+  .dark .testimonial-dot {
+    background: var(--color-border-dark);
+  }
+  .testimonial-dot.active {
+    background: var(--color-brand-blue);
+    width: 1.5rem;
+    border-radius: 999px;
+  }
+
+  /* Arrows */
+  .testimonial-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-text-secondary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .dark .testimonial-arrow {
+    background: rgba(19, 28, 49, 0.9);
+    color: var(--color-text-dark-secondary);
+  }
+  #testimonials-carousel:hover .testimonial-arrow {
+    opacity: 1;
+  }
+  .testimonial-arrow:hover {
+    background: var(--color-brand-blue);
+    color: white;
+  }
+  .testimonial-arrow-prev { left: -1rem; }
+  .testimonial-arrow-next { right: -1rem; }
+
+  @media (max-width: 768px) {
+    .testimonial-arrow { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-slide {
+      transition: none;
+      opacity: 1;
+      position: relative;
+      transform: none;
+    }
+    .testimonial-slide:not(.active) {
+      display: none;
+    }
+    .testimonial-slide.exit {
+      display: none;
+    }
+    #testimonials-carousel:hover .testimonial-arrow {
+      opacity: 1;
+    }
+  }
+</style>
+
 <script>
-  const grid = document.getElementById("testimonials-grid");
-  if (grid) {
+  (function () {
+    const container = document.getElementById("testimonials-carousel");
+    if (!container) return;
+
+    const slides = container.querySelectorAll(".testimonial-slide");
+    const dots = container.querySelectorAll(".testimonial-dot");
+    const prevBtn = container.querySelector(".testimonial-arrow-prev");
+    const nextBtn = container.querySelector(".testimonial-arrow-next");
+    if (slides.length === 0) return;
+
+    let current = 0;
+    let interval = null;
+    const INTERVAL_MS = 5000;
+
+    function goTo(index) {
+      if (index === current) return;
+      // Mark current as exiting
+      slides[current].classList.remove("active");
+      slides[current].classList.add("exit");
+      dots[current].classList.remove("active");
+
+      current = index;
+
+      // Show new slide
+      slides[current].classList.remove("exit");
+      slides[current].classList.add("active");
+      dots[current].classList.add("active");
+    }
+
+    function next() {
+      goTo((current + 1) % slides.length);
+    }
+
+    function prev() {
+      goTo((current - 1 + slides.length) % slides.length);
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      interval = setInterval(next, INTERVAL_MS);
+    }
+
+    function stopAutoplay() {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    }
+
+    // Init: show first slide
+    slides[0].classList.add("active");
+    dots[0]?.classList.add("active");
+
+    // Dot clicks
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const idx = parseInt(dot.dataset.index || "0");
+        if (idx !== current) {
+          goTo(idx);
+          startAutoplay();
+        }
+      });
+    });
+
+    // Arrow clicks
+    prevBtn?.addEventListener("click", () => { prev(); startAutoplay(); });
+    nextBtn?.addEventListener("click", () => { next(); startAutoplay(); });
+
+    // Pause on hover
+    container.addEventListener("mouseenter", stopAutoplay);
+    container.addEventListener("mouseleave", startAutoplay);
+
+    // Keyboard
+    container.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { prev(); startAutoplay(); }
+      if (e.key === "ArrowRight") { next(); startAutoplay(); }
+    });
+
+    // IntersectionObserver: only autoplay when visible
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
+          startAutoplay();
+        } else {
+          stopAutoplay();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.3 }
     );
-    observer.observe(grid);
-  }
+    observer.observe(container);
+  })();
 </script>

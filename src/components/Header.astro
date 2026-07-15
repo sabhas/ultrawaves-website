@@ -80,6 +80,9 @@ import { Image } from "astro:assets";
     </div>
   </div>
 
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress" class="absolute bottom-0 left-0 h-0.5 bg-brand-blue transition-none" style="width: 0%" aria-hidden="true" />
+
   <!-- Mobile menu overlay -->
   <div
     id="mobile-overlay"
@@ -166,9 +169,10 @@ import { Image } from "astro:assets";
     link.addEventListener("click", closeMenu);
   });
 
-  // ── Scroll Shadow + Shrink ──
+  // ── Scroll Shadow + Shrink + Progress Bar ──
   const header = document.getElementById("header");
   const headerInner = document.getElementById("header-inner");
+  const progressBar = document.getElementById("scroll-progress");
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -180,6 +184,13 @@ import { Image } from "astro:assets";
     } else {
       headerInner.classList.remove("lg:h-16");
       headerInner.classList.add("lg:h-20");
+    }
+
+    // Update scroll progress
+    if (progressBar) {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      progressBar.style.width = progress + "%";
     }
   });
 

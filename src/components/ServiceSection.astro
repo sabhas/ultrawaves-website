@@ -90,14 +90,14 @@ const categories = [
       {services.map((service) => {
         const imgPromise = heroImages[service.id];
         return (
-          <div
-            data-panel-id={service.id}
-            class="service-panel hidden"
-          >
+            <div
+              data-panel-id={service.id}
+              class="service-panel"
+            >
             <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
               <!-- Hero image -->
               <div class="lg:col-span-2 animate-on-scroll">
-                <div class="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10 img-shimmer">
                   {imgPromise && (
                     <Image
                       src={imgPromise}
@@ -175,6 +175,39 @@ const categories = [
   </div>
 </section>
 
+<style>
+  .service-panel {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+  .service-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+  .service-panel.exit {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .service-panel {
+      transition: none;
+      opacity: 1;
+      transform: none;
+      position: relative;
+    }
+    .service-panel:not(.active) {
+      display: none;
+    }
+  }
+</style>
+
 <script>
   (function () {
     const container = document.getElementById("services-detail");
@@ -194,19 +227,34 @@ const categories = [
     let activeService = "cabling";
 
     function activateService(id) {
+      if (id === activeService) return;
+      const prevId = activeService;
       activeService = id;
 
-      // Panels
+      // Exit current panel
       panels.forEach((panel) => {
-        const isActive = panel.dataset.panelId === id;
-        panel.classList.toggle("hidden", !isActive);
-        if (isActive) {
-          // Trigger animation
-          panel.querySelectorAll(".animate-on-scroll").forEach((el) => {
-            el.classList.add("visible");
-          });
+        if (panel.dataset.panelId === prevId) {
+          panel.classList.remove("active");
+          panel.classList.add("exit");
         }
       });
+
+      // Enter new panel (with small delay for crossfade)
+      setTimeout(() => {
+        panels.forEach((panel) => {
+          const isActive = panel.dataset.panelId === id;
+          if (isActive) {
+            panel.classList.remove("exit");
+            panel.classList.add("active");
+            // Trigger inner animations
+            panel.querySelectorAll(".animate-on-scroll").forEach((el) => {
+              el.classList.add("visible");
+            });
+          } else if (panel.dataset.panelId !== prevId) {
+            panel.classList.remove("exit", "active");
+          }
+        });
+      }, 50);
 
       // Pills
       pills.forEach((pill) => {
@@ -269,7 +317,11 @@ const categories = [
     });
 
     // Activate default
-    activateService("cabling");
+    panels.forEach((panel) => {
+      if (panel.dataset.panelId === "cabling") {
+        panel.classList.add("active");
+      }
+    });
 
     // IntersectionObserver for the section itself
     const sectionObserver = new IntersectionObserver(

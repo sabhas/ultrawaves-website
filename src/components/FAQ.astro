@@ -14,7 +14,7 @@ import { faqs } from "../content/faq";
 
     <div class="space-y-3" id="faq-list">
       {faqs.map((faq) => (
-        <div class="faq-item rounded-2xl bg-surface dark:bg-surface-dark border border-border dark:border-border-dark shadow-sm transition-all">
+        <div class="faq-item rounded-2xl bg-surface dark:bg-surface-dark border border-border dark:border-border-dark shadow-sm transition-all duration-300">
           <button
             class="faq-toggle w-full flex items-center justify-between px-6 py-5 text-left"
             aria-expanded="false"
@@ -23,9 +23,14 @@ import { faqs } from "../content/faq";
             <span class="text-sm sm:text-base font-semibold text-text-primary dark:text-text-dark-primary pr-4">
               {faq.question}
             </span>
-            <svg class="faq-chevron h-4 w-4 shrink-0 text-text-tertiary dark:text-text-dark-tertiary transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <span class="faq-icon relative h-5 w-5 shrink-0" aria-hidden="true">
+              <svg class="faq-icon-plus absolute inset-0 h-5 w-5 text-text-tertiary dark:text-text-dark-tertiary transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <svg class="faq-icon-minus absolute inset-0 h-5 w-5 text-brand-blue transition-all duration-300 opacity-0 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+              </svg>
+            </span>
           </button>
           <div
             id={`faq-answer-${faq.id}`}
@@ -44,13 +49,38 @@ import { faqs } from "../content/faq";
   </div>
 </section>
 
+<style>
+  .faq-item.active {
+    border-color: var(--color-brand-blue);
+    background: color-mix(in srgb, var(--color-brand-blue) 3%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-brand-blue) 15%, transparent);
+  }
+  .dark .faq-item.active {
+    background: color-mix(in srgb, var(--color-brand-blue) 8%, var(--color-surface-dark));
+    border-color: color-mix(in srgb, var(--color-brand-blue) 40%, transparent);
+  }
+  .faq-item.active .faq-icon-plus {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+  .faq-item.active .faq-icon-minus {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item .faq-icon-plus,
+    .faq-item .faq-icon-minus {
+      transition: none;
+    }
+  }
+</style>
+
 <script>
   (function () {
     const items = document.querySelectorAll(".faq-item");
     items.forEach((item) => {
       const toggle = item.querySelector(".faq-toggle");
       const answer = item.querySelector(".faq-answer");
-      const chevron = item.querySelector(".faq-chevron");
 
       toggle?.addEventListener("click", () => {
         const isOpen = toggle.getAttribute("aria-expanded") === "true";
@@ -59,11 +89,10 @@ import { faqs } from "../content/faq";
         items.forEach((other) => {
           const otherToggle = other.querySelector(".faq-toggle");
           const otherAnswer = other.querySelector(".faq-answer");
-          const otherChevron = other.querySelector(".faq-chevron");
           if (other !== item) {
             otherToggle?.setAttribute("aria-expanded", "false");
             if (otherAnswer) otherAnswer.style.maxHeight = "0";
-            otherChevron?.classList.remove("rotate-180");
+            other.classList.remove("active");
           }
         });
 
@@ -71,10 +100,10 @@ import { faqs } from "../content/faq";
         toggle.setAttribute("aria-expanded", String(!isOpen));
         if (isOpen) {
           answer.style.maxHeight = "0";
-          chevron?.classList.remove("rotate-180");
+          item.classList.remove("active");
         } else {
           answer.style.maxHeight = answer.scrollHeight + "px";
-          chevron?.classList.add("rotate-180");
+          item.classList.add("active");
         }
       });
     });

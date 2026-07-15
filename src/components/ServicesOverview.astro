@@ -41,7 +41,7 @@ const categories: Record<string, { label: string; color: string }> = {
       </p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 stagger-children" id="services-grid">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 stagger-children reveal-scale" id="services-grid">
       {
         serviceOverview.map((service) => {
           const cat = categories[service.id] ?? { label: "General", color: "bg-gray-100 text-gray-600" };
