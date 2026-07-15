@@ -23,15 +23,15 @@ export const site = {
   focus: "IT Network Services",
   cta: "Get in Touch for Free Consultation",
   socialLinks: [
-    { platform: "LinkedIn", url: "https://linkedin.com/company/ultrawavetechnologies" },
-    { platform: "Instagram", url: "https://instagram.com/ultrawavetech" },
-    { platform: "Facebook", url: "https://facebook.com/ultrawavetechnologies" },
+    { platform: "LinkedIn", url: "[Add LinkedIn URL]" },
+    { platform: "Instagram", url: "[Add Instagram URL]" },
+    { platform: "Facebook", url: "[Add Facebook URL]" },
   ],
   stats: [
-    { number: "10+", label: "Years Experience" },
-    { number: "50+", label: "Projects Delivered" },
-    { number: "100+", label: "Happy Clients" },
-    { number: "24/7", label: "Support" },
+    { number: "[Add]", label: "Years Experience" },
+    { number: "[Add]", label: "Projects Delivered" },
+    { number: "[Add]", label: "Happy Clients" },
+    { number: "[Add]", label: "Support" },
   ],
 } as const;
 
