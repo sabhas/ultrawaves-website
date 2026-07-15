@@ -31,31 +31,31 @@ import { Image } from "astro:assets";
                   href={`tel:${phone.number}`}
                   class:list={[
                     "flex items-center gap-4 group",
-                    i === 0 ? "text-brand-maroon" : "text-gray-700",
+                    i === 0 ? "text-brand-orange" : "text-dark-muted",
                   ]}
                 >
-                  <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 group-hover:bg-brand-blue/10 transition-colors" aria-hidden="true">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-border group-hover:bg-cyan/10 transition-colors" aria-hidden="true">
+                    <svg class="h-5 w-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </span>
-                  <span class="font-medium group-hover:text-brand-blue transition-colors">{phone.display}</span>
+                  <span class="font-medium group-hover:text-cyan transition-colors">{phone.display}</span>
                 </a>
               ))
             }
 
-            <a href={`mailto:${site.email}`} class="flex items-center gap-4 text-brand-maroon group">
-              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 group-hover:bg-brand-blue/10 transition-colors" aria-hidden="true">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href={`mailto:${site.email}`} class="flex items-center gap-4 text-brand-orange group">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-border group-hover:bg-cyan/10 transition-colors" aria-hidden="true">
+                <svg class="h-5 w-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </span>
-              <span class="font-medium group-hover:text-brand-blue transition-colors break-all">{site.email}</span>
+              <span class="font-medium group-hover:text-cyan transition-colors break-all">{site.email}</span>
             </a>
 
-            <div class="flex items-start gap-4 text-gray-700">
-              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 shrink-0" aria-hidden="true">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="flex items-start gap-4 text-dark-muted">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-border shrink-0" aria-hidden="true">
+                <svg class="h-5 w-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -65,8 +65,8 @@ import { Image } from "astro:assets";
               </address>
             </div>
 
-            <p class="text-sm text-gray-500 pt-2">
-              Contact: <span class="font-medium text-gray-700">{site.contactPerson}</span>
+            <p class="text-sm text-dark-muted/70 pt-2">
+              Contact: <span class="font-medium text-dark-text">{site.contactPerson}</span>
             </p>
           </div>
         </div>

@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+  --color-dark-bg: #0a0f1a;
+  --color-dark-surface: #111827;
+  --color-dark-card: #1a2033;
+  --color-dark-border: #1e293b;
+  --color-dark-muted: #94a3b8;
+  --color-dark-text: #e2e8f0;
+  --color-cyan: #06b6d4;
+  --color-cyan-dark: #0891b2;
+  --color-cyan-glow: #22d3ee;
   --color-brand-blue: #005696;
   --color-brand-blue-dark: #003d6b;
   --color-brand-blue-light: #1a7fc4;
@@ -17,12 +26,12 @@ html {
 
 body {
   font-family: var(--font-sans);
-  color: #1a1a2e;
-  background-color: #ffffff;
+  color: var(--color-dark-text);
+  background-color: var(--color-dark-bg);
 }
 
 ::selection {
-  background-color: color-mix(in srgb, var(--color-brand-blue) 20%, white);
+  background-color: color-mix(in srgb, var(--color-cyan) 30%, transparent);
 }
 
 .section-heading {
@@ -32,18 +41,61 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* Replaced circuit-pattern with a dark variant */
 .circuit-pattern {
-  background-image: radial-gradient(
-      circle at 20% 80%,
-      color-mix(in srgb, var(--color-brand-blue) 4%, transparent) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      color-mix(in srgb, var(--color-brand-orange) 4%, transparent) 0%,
-      transparent 50%
-    );
+  background-image:
+    radial-gradient(circle at 20% 80%, color-mix(in srgb, var(--color-cyan) 8%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--color-brand-orange) 6%, transparent) 0%, transparent 50%);
+  background-color: var(--color-dark-bg);
 }
+
+/* ============ Dark Theme Overrides ============ */
+
+.text-gray-900 { color: var(--color-dark-text) !important; }
+.text-gray-700, .text-gray-600 { color: var(--color-dark-muted) !important; }
+.text-gray-500 { color: color-mix(in srgb, var(--color-dark-muted) 70%, transparent) !important; }
+.text-gray-200 { color: color-mix(in srgb, var(--color-dark-muted) 20%, transparent) !important; }
+.text-gray-400 { color: var(--color-dark-muted) !important; }
+
+.bg-white { background-color: var(--color-dark-card) !important; }
+.bg-gray-50 { background-color: var(--color-dark-surface) !important; }
+.bg-gray-100 { background-color: var(--color-dark-border) !important; }
+.border-gray-100 { border-color: var(--color-dark-border) !important; }
+.border-gray-200 { border-color: var(--color-dark-border) !important; }
+.ring-gray-100, .ring-gray-200 { --tw-ring-color: var(--color-dark-border) !important; }
+
+.shadow-sm { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; }
+.shadow-md { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important; }
+.shadow-lg { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; }
+
+.hover\:shadow-md:hover { box-shadow: 0 4px 20px rgba(6, 182, 212, 0.12) !important; }
+
+/* Brand blue text becomes cyan in dark theme */
+.text-brand-blue { color: var(--color-cyan) !important; }
+.hover\:text-brand-blue:hover { color: var(--color-cyan-glow) !important; }
+.bg-brand-blue { background-color: var(--color-cyan) !important; }
+.hover\:bg-brand-blue:hover { background-color: var(--color-cyan) !important; }
+.hover\:bg-brand-blue-dark:hover { background-color: var(--color-cyan-dark) !important; }
+.bg-brand-blue\/10 { background-color: color-mix(in srgb, var(--color-cyan) 10%, transparent) !important; }
+.bg-brand-blue\/5 { background-color: color-mix(in srgb, var(--color-cyan) 5%, transparent) !important; }
+.text-brand-blue\/70 { color: color-mix(in srgb, var(--color-cyan) 70%, transparent) !important; }
+.group:hover .group-hover\:bg-brand-blue { background-color: var(--color-cyan) !important; }
+.group:hover .group-hover\:text-brand-blue { color: var(--color-cyan-glow) !important; }
+
+/* Brand orange accent */
+.text-brand-orange { color: var(--color-brand-orange) !important; }
+.border-brand-orange { border-color: var(--color-brand-orange) !important; }
+.hover\:bg-brand-orange:hover { background-color: var(--color-brand-orange) !important; }
+.hover\:text-white:hover { color: white !important; }
+.bg-brand-orange\/10 { background-color: color-mix(in srgb, var(--color-brand-orange) 10%, transparent) !important; }
+
+/* Shadow overrides for brand colors */
+.shadow-brand-blue\/20 { box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25) !important; }
+.hover\:shadow-brand-orange\/20:hover { box-shadow: 0 4px 14px rgba(232, 119, 34, 0.25) !important; }
+
+/* White text stays white */
+.text-white { color: #fff !important; }
+.hover\:text-white:hover { color: #fff !important; }
 
 /* ============ Scroll-Reveal Animations ============ */
 
@@ -114,14 +166,48 @@ body {
 }
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 86, 150, 0.12);
+  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.15);
+  border-color: color-mix(in srgb, var(--color-cyan) 30%, transparent);
 }
 
 .hover-glow {
   transition: box-shadow 0.3s ease;
 }
 .hover-glow:hover {
-  box-shadow: 0 0 20px rgba(232, 119, 34, 0.25);
+  box-shadow: 0 0 24px rgba(6, 182, 212, 0.25);
+}
+
+/* ============ Neon/Cyber Effects ============ */
+
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-cyan), var(--color-brand-orange));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+.glow-border:hover::before {
+  opacity: 0.5;
+}
+
+.cyan-glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+}
+.cyan-glow:hover {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+}
+
+.orange-glow {
+  box-shadow: 0 0 20px rgba(232, 119, 34, 0.15);
+}
+.orange-glow:hover {
+  box-shadow: 0 0 30px rgba(232, 119, 34, 0.3);
 }
 
 /* ============ Button Pulse ============ */

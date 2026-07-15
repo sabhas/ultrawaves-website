@@ -10,25 +10,30 @@ import { Image } from "astro:assets";
   aria-label="Hero"
 >
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute top-12 left-8 w-24 h-24 rounded-full bg-brand-blue/5 animate-float-slow blur-xl" />
-    <div class="absolute bottom-20 right-12 w-32 h-32 rounded-full bg-brand-orange/5 animate-float blur-xl" />
-    <div class="absolute top-1/3 right-1/4 w-16 h-16 rounded-full bg-brand-blue/5 animate-float-delayed blur-lg" />
-    <div class="absolute bottom-1/4 left-1/4 w-20 h-20 rounded-full bg-brand-orange/5 animate-float-slow blur-lg" />
+    <!-- Grid overlay for cyber feel -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(6,182,212,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.3) 1px, transparent 1px); background-size: 60px 60px;" />
 
-    <div class="absolute top-0 left-0 w-1/2 h-1/2 opacity-20">
-      <svg viewBox="0 0 400 400" class="w-full h-full text-brand-blue" fill="none">
-        <path d="M0 200 H100 L120 180 L140 200 L200 200" stroke="currentColor" stroke-width="1.5" opacity="0.4" stroke-dasharray="8 4" class="animate-float" />
-        <path d="M50 100 H150 L170 80 L190 100 L250 100" stroke="currentColor" stroke-width="1.5" opacity="0.3" stroke-dasharray="6 3" class="animate-float-delayed" />
-        <circle cx="100" cy="200" r="4" fill="currentColor" opacity="0.5" class="animate-pulse-glow" />
-        <circle cx="150" cy="100" r="4" fill="currentColor" opacity="0.5" class="animate-pulse-glow" style="animation-delay: 1s" />
-        <circle cx="200" cy="200" r="4" fill="currentColor" opacity="0.5" class="animate-pulse-glow" style="animation-delay: 2s" />
+    <!-- Glowing gradient orbs -->
+    <div class="absolute top-12 left-8 w-36 h-36 rounded-full bg-cyan/10 animate-float-slow blur-3xl" />
+    <div class="absolute bottom-20 right-12 w-44 h-44 rounded-full bg-brand-orange/10 animate-float blur-3xl" />
+    <div class="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-cyan/10 animate-float-delayed blur-2xl" />
+    <div class="absolute bottom-1/4 left-1/4 w-28 h-28 rounded-full bg-brand-orange/10 animate-float-slow blur-2xl" />
+
+    <!-- Cyan circuit lines -->
+    <div class="absolute top-0 left-0 w-1/2 h-1/2 opacity-30">
+      <svg viewBox="0 0 400 400" class="w-full h-full text-cyan" fill="none" style="filter: drop-shadow(0 0 4px rgba(6,182,212,0.4))">
+        <path d="M0 200 H100 L120 180 L140 200 L200 200" stroke="currentColor" stroke-width="1.5" opacity="0.5" stroke-dasharray="8 4" class="animate-float" />
+        <path d="M50 100 H150 L170 80 L190 100 L250 100" stroke="currentColor" stroke-width="1.5" opacity="0.4" stroke-dasharray="6 3" class="animate-float-delayed" />
+        <circle cx="100" cy="200" r="5" fill="var(--color-cyan)" opacity="0.6" class="animate-pulse-glow" style="filter: drop-shadow(0 0 6px rgba(6,182,212,0.8))" />
+        <circle cx="150" cy="100" r="5" fill="var(--color-cyan)" opacity="0.6" class="animate-pulse-glow" style="animation-delay: 1s; filter: drop-shadow(0 0 6px rgba(6,182,212,0.8))" />
+        <circle cx="200" cy="200" r="5" fill="var(--color-cyan)" opacity="0.6" class="animate-pulse-glow" style="animation-delay: 2s; filter: drop-shadow(0 0 6px rgba(6,182,212,0.8))" />
       </svg>
     </div>
-    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 opacity-20 rotate-180">
-      <svg viewBox="0 0 400 400" class="w-full h-full text-brand-blue" fill="none">
-        <path d="M0 200 H100 L120 180 L140 200 L200 200" stroke="currentColor" stroke-width="1.5" opacity="0.4" stroke-dasharray="8 4" class="animate-float" />
-        <circle cx="100" cy="200" r="4" fill="currentColor" opacity="0.5" class="animate-pulse-glow" />
-        <circle cx="200" cy="200" r="4" fill="currentColor" opacity="0.5" class="animate-pulse-glow" style="animation-delay: 1.5s" />
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 opacity-30 rotate-180">
+      <svg viewBox="0 0 400 400" class="w-full h-full text-cyan" fill="none" style="filter: drop-shadow(0 0 4px rgba(6,182,212,0.4))">
+        <path d="M0 200 H100 L120 180 L140 200 L200 200" stroke="currentColor" stroke-width="1.5" opacity="0.5" stroke-dasharray="8 4" class="animate-float" />
+        <circle cx="100" cy="200" r="5" fill="var(--color-cyan)" opacity="0.6" class="animate-pulse-glow" style="filter: drop-shadow(0 0 6px rgba(6,182,212,0.8))" />
+        <circle cx="200" cy="200" r="5" fill="var(--color-cyan)" opacity="0.6" class="animate-pulse-glow" style="animation-delay: 1.5s; filter: drop-shadow(0 0 6px rgba(6,182,212,0.8))" />
       </svg>
     </div>
   </div>
@@ -41,37 +46,37 @@ import { Image } from "astro:assets";
           alt="Ultra Wave Technologies"
           width={775}
           height={537}
-          class="mt-6 sm:mt-8 lg:mt-10 h-32 sm:h-40 lg:h-48 w-auto object-contain mb-6"
+          class="mt-6 sm:mt-8 lg:mt-10 h-32 sm:h-40 lg:h-48 w-auto object-contain mb-6 brightness-0 invert"
           loading="eager"
         />
       </div>
 
-      <p data-animate="fade-in-up" data-animate-delay="100" class="text-brand-blue font-semibold text-lg sm:text-xl mb-2 tracking-wide">
+      <p data-animate="fade-in-up" data-animate-delay="100" class="text-cyan font-semibold text-lg sm:text-xl mb-2 tracking-wide drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]">
         {site.tagline}
       </p>
 
-      <h1 data-animate="fade-in-up" data-animate-delay="200" class="text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
+      <h1 data-animate="fade-in-up" data-animate-delay="200" class="text-3xl sm:text-5xl lg:text-6xl font-bold text-dark-text leading-tight mb-4">
         {site.name}
       </h1>
 
-      <p data-animate="fade-in-up" data-animate-delay="300" class="text-lg sm:text-xl text-gray-600 max-w-2xl mb-2 font-serif">
+      <p data-animate="fade-in-up" data-animate-delay="300" class="text-lg sm:text-xl text-dark-muted max-w-2xl mb-2 font-serif">
         {site.focus}
       </p>
 
-      <p data-animate="fade-in-up" data-animate-delay="400" class="text-base text-gray-500 max-w-xl mb-10">
+      <p data-animate="fade-in-up" data-animate-delay="400" class="text-base text-dark-muted/70 max-w-xl mb-10">
         {site.description}
       </p>
 
       <div data-animate="fade-in-up" data-animate-delay="500" class="flex flex-col sm:flex-row gap-4">
         <a
           href="#services"
-          class="btn-pulse inline-flex items-center justify-center rounded-lg bg-brand-blue px-8 py-3.5 text-base font-semibold text-white hover:bg-brand-blue-dark transition-colors shadow-lg shadow-brand-blue/20"
+          class="btn-pulse inline-flex items-center justify-center rounded-lg bg-cyan px-8 py-3.5 text-base font-semibold text-dark-bg hover:bg-cyan-dark transition-colors shadow-lg cyan-glow"
         >
           Our Services
         </a>
         <a
           href="#contact"
-          class="inline-flex items-center justify-center rounded-lg border-2 border-brand-orange px-8 py-3.5 text-base font-semibold text-brand-orange hover:bg-brand-orange hover:text-white transition-colors hover:shadow-lg hover:shadow-brand-orange/20"
+          class="inline-flex items-center justify-center rounded-lg border-2 border-brand-orange px-8 py-3.5 text-base font-semibold text-brand-orange hover:bg-brand-orange hover:text-dark-bg transition-all hover:shadow-lg orange-glow"
         >
           {site.cta}
         </a>

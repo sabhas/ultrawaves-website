@@ -31,12 +31,12 @@ const projectImages: Record<string, ImageMetadata> = {
               data-animate="fade-in-up"
               data-animate-delay={i * 150}
               class:list={[
-                "flex flex-col gap-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover-lift",
+                "flex flex-col gap-8 rounded-2xl border border-dark-border bg-dark-card p-8 shadow-sm hover-lift",
                 i % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row",
               ]}
             >
               <div class="lg:w-2/5">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-gray-100 shadow-sm ring-1 ring-gray-200/80">
+                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-dark-surface shadow-sm ring-1 ring-dark-border/50">
                   {img && (
                     <Image
                       src={img}
@@ -51,13 +51,13 @@ const projectImages: Record<string, ImageMetadata> = {
               </div>
               <div class="lg:w-3/5">
                 <h3 class="text-2xl font-bold text-brand-orange font-serif mb-1">{project.title}</h3>
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">{project.subtitle}</p>
-                <p class="text-gray-600 font-serif mb-4">{project.description}</p>
-                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Scope of Work</h4>
+                <p class="text-sm font-semibold text-dark-muted/70 uppercase tracking-wider mb-3">{project.subtitle}</p>
+                <p class="text-dark-muted font-serif mb-4">{project.description}</p>
+                <h4 class="text-sm font-bold text-dark-text uppercase tracking-wider mb-3">Scope of Work</h4>
                 <ul class="space-y-2" role="list">
                   {
                     project.scope.map((item) => (
-                      <li class="flex items-start gap-2 text-gray-600 text-sm">
+                      <li class="flex items-start gap-2 text-dark-muted text-sm">
                         <span class="text-brand-blue mt-0.5" aria-hidden="true">▸</span>
                         {item}
                       </li>

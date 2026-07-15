@@ -7,7 +7,7 @@ import { Image } from "astro:assets";
 
 <header
   id="header"
-  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 bg-dark-surface/90 backdrop-blur-md border-b border-dark-border transition-all duration-300"
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between lg:h-20">
@@ -17,14 +17,14 @@ import { Image } from "astro:assets";
           alt="Ultra Wave Technologies logo"
           width={550}
           height={539}
-          class="h-10 w-10 object-contain sm:hidden"
+          class="h-10 w-10 object-contain sm:hidden brightness-0 invert"
         />
         <Image
           src={logoWithText}
           alt="Ultra Wave Technologies"
           width={775}
           height={537}
-          class="hidden sm:block h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain"
+          class="hidden sm:block h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain brightness-0 invert"
         />
       </a>
 
@@ -33,18 +33,18 @@ import { Image } from "astro:assets";
           navLinks.map((link) => (
             <a
               href={link.href}
-              class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-blue transition-colors rounded-lg hover:bg-brand-blue/5"
-            >
-              {link.label}
-            </a>
-          ))
-        }
+            class="nav-link px-3 py-2 text-sm font-medium text-dark-muted hover:text-cyan transition-colors rounded-lg hover:bg-cyan/10"
+          >
+            {link.label}
+          </a>
+        ))
+      }
       </nav>
 
       <div class="flex items-center gap-3">
         <a
           href="#contact"
-          class="hidden sm:inline-flex items-center rounded-lg bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue-dark transition-colors"
+          class="hidden sm:inline-flex items-center rounded-lg bg-cyan px-4 py-2 text-sm font-semibold text-dark-bg hover:bg-cyan-dark transition-colors"
         >
           Contact Us
         </a>
@@ -52,7 +52,7 @@ import { Image } from "astro:assets";
         <button
           id="mobile-menu-btn"
           type="button"
-          class="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+          class="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-dark-muted hover:bg-dark-border"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Toggle navigation menu"
@@ -68,7 +68,7 @@ import { Image } from "astro:assets";
 
   <nav
     id="mobile-menu"
-    class="hidden lg:hidden border-t border-gray-100 bg-white"
+    class="hidden lg:hidden border-t border-dark-border bg-dark-surface"
     aria-label="Mobile navigation"
   >
     <div class="mx-auto max-w-7xl px-4 py-4 space-y-1">
@@ -76,7 +76,7 @@ import { Image } from "astro:assets";
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="mobile-nav-link block rounded-lg px-4 py-3 text-base font-medium text-gray-700 hover:bg-brand-blue/5 hover:text-brand-blue"
+            class="mobile-nav-link block rounded-lg px-4 py-3 text-base font-medium text-dark-muted hover:bg-cyan/10 hover:text-cyan"
           >
             {link.label}
           </a>
@@ -84,7 +84,7 @@ import { Image } from "astro:assets";
       }
       <a
         href="#contact"
-        class="block rounded-lg bg-brand-blue px-4 py-3 text-center text-base font-semibold text-white hover:bg-brand-blue-dark mt-2"
+        class="block rounded-lg bg-cyan px-4 py-3 text-center text-base font-semibold text-dark-bg hover:bg-cyan-dark mt-2"
       >
         Contact Us
       </a>
@@ -136,9 +136,9 @@ import { Image } from "astro:assets";
           const id = entry.target.id;
           navLinks.forEach((link) => {
             const href = link.getAttribute("href");
-            link.classList.toggle("text-brand-blue", href === `#${id}`);
-            link.classList.toggle("font-semibold", href === `#${id}`);
-            link.classList.toggle("text-gray-600", href !== `#${id}`);
+          link.classList.toggle("text-cyan", href === `#${id}`);
+          link.classList.toggle("font-semibold", href === `#${id}`);
+          link.classList.toggle("text-dark-muted", href !== `#${id}`);
           });
         }
       });

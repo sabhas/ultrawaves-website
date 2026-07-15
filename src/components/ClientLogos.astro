@@ -20,7 +20,7 @@ import { partners } from "../content/clients";
           <div
             data-animate="fade-in-up"
             data-animate-delay={i * 80}
-            class="partner-card group flex items-center justify-center rounded-xl bg-white border border-gray-100 px-6 py-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--partner-color)]"
+            class="partner-card group flex items-center justify-center rounded-xl bg-dark-card border border-dark-border px-6 py-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--partner-color)]"
             style={`--partner-color: ${partner.color}`}
           >
             <span class="text-lg sm:text-xl font-bold tracking-tight text-[var(--partner-color)] transition-transform duration-300 group-hover:scale-110">
@@ -35,16 +35,16 @@ import { partners } from "../content/clients";
       .partner-card {
         background-image: linear-gradient(
           to bottom,
-          color-mix(in srgb, var(--partner-color) 8%, white),
-          white 60%
+          color-mix(in srgb, var(--partner-color) 6%, transparent),
+          transparent 60%
         );
       }
 
       .partner-card:hover {
         background-image: linear-gradient(
           to bottom,
-          color-mix(in srgb, var(--partner-color) 16%, white),
-          white 55%
+          color-mix(in srgb, var(--partner-color) 14%, transparent),
+          transparent 55%
         );
       }
     </style>

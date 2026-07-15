@@ -4,7 +4,7 @@ import aboutIllustration from "../assets/web/about-illustration.svg";
 import { Image } from "astro:assets";
 ---
 
-<section id="about" class="py-12 lg:py-16 bg-gray-50" aria-labelledby="about-heading">
+<section id="about" class="py-12 lg:py-16 bg-dark-surface" aria-labelledby="about-heading">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div data-animate="fade-in-up" class="text-center mb-10">
       <span class="text-6xl sm:text-8xl font-bold text-gray-200 block leading-none select-none" aria-hidden="true">ABOUT</span>
@@ -35,13 +35,13 @@ import { Image } from "astro:assets";
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 mt-10">
-      <div data-animate="fade-in-up" data-animate-delay="100" class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100 hover-lift">
+      <div data-animate="fade-in-up" data-animate-delay="100" class="rounded-2xl bg-dark-card p-8 shadow-sm border border-dark-border hover-lift">
         <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Mission</h3>
-        <p class="text-gray-600 leading-relaxed font-serif">{about.mission}</p>
+        <p class="text-dark-muted leading-relaxed font-serif">{about.mission}</p>
       </div>
-      <div data-animate="fade-in-up" data-animate-delay="200" class="rounded-2xl bg-white p-8 shadow-sm border border-gray-100 hover-lift">
+      <div data-animate="fade-in-up" data-animate-delay="200" class="rounded-2xl bg-dark-card p-8 shadow-sm border border-dark-border hover-lift">
         <h3 class="section-heading text-xl sm:text-2xl mb-4 uppercase tracking-wider">Values</h3>
-        <p class="text-gray-600 leading-relaxed font-serif">{about.values}</p>
+        <p class="text-dark-muted leading-relaxed font-serif">{about.values}</p>
       </div>
     </div>
   </div>
