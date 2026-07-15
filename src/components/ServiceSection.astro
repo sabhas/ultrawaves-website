@@ -55,6 +55,7 @@ const categories = [
       {categories.map((cat, i) => (
         <button
           data-category={cat.name}
+          data-service-ids={cat.ids.join(',')}
           class="category-tab shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 border"
           class:list={[
             i === 0
@@ -183,13 +184,11 @@ const categories = [
     const pills = container.querySelectorAll(".service-pill");
     const catTabs = container.querySelectorAll(".category-tab");
 
-    // ── Category definitions ──
-    const categories = [
-      { name: "Infrastructure", ids: ["cabling", "wifi"] },
-      { name: "Security", ids: ["cctv", "access", "intercom"] },
-      { name: "Communication & Innovation", ids: ["pabx", "automation"] },
-      { name: "Digital & Support", ids: ["web", "marketing", "amc"] },
-    ];
+    // ── Read category definitions from data attributes ──
+    const categories = Array.from(catTabs).map((tab) => ({
+      name: tab.dataset.category || "",
+      ids: tab.dataset.serviceIds?.split(",") || [],
+    }));
 
     // Show the first service by default
     let activeService = "cabling";

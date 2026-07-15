@@ -24,6 +24,7 @@ import { Image } from "astro:assets";
         <div class="rounded-2xl bg-surface dark:bg-surface-dark-secondary border border-border dark:border-border-dark p-8 shadow-sm">
           <h3 class="text-xl font-bold text-text-primary dark:text-text-dark-primary mb-6">Send us a Message</h3>
           <form id="contact-form" class="space-y-5">
+            <input type="hidden" id="form-email-to" value={site.email} />
             <div class="grid sm:grid-cols-2 gap-5">
               <div class="relative">
                 <input
@@ -79,6 +80,7 @@ import { Image } from "astro:assets";
                 <select
                   id="form-service"
                   name="service"
+                  required
                   class="peer w-full rounded-lg border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 pt-6 pb-2 text-sm text-text-primary dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all appearance-none"
                 >
                   <option value="" selected disabled></option>
@@ -89,7 +91,7 @@ import { Image } from "astro:assets";
                 </select>
                 <label
                   for="form-service"
-                  class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue"
+                  class="absolute left-4 top-5 text-sm text-text-tertiary dark:text-text-dark-tertiary transition-all peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-blue peer-[:valid]:top-2 peer-[:valid]:text-xs"
                 >
                   Service Interested In
                 </label>
@@ -228,7 +230,9 @@ import { Image } from "astro:assets";
       );
 
       // Open email client as form submission (static site fallback)
-      window.location.href = `mailto:${"ultrawavetechnologyllc@gmail.com"}?subject=${subject}&body=${body}`;
+      const siteEmailInput = document.getElementById("form-email-to");
+      const siteEmail = siteEmailInput ? siteEmailInput.value : "ultrawavetechnologyllc@gmail.com";
+      window.location.href = `mailto:${siteEmail}?subject=${subject}&body=${body}`;
 
       status.textContent = "Thank you! Your message has been sent. We'll get back to you shortly.";
       status.classList.remove("hidden", "text-red-600");
