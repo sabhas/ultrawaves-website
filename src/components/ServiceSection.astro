@@ -323,6 +323,29 @@ const categories = [
       }
     });
 
+    // Hash-based navigation
+    function activateFromHash() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return false;
+      const validIds = Array.from(panels).map((p) => p.dataset.panelId);
+      if (validIds.includes(hash)) {
+        activateService(hash);
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
+        return true;
+      }
+      return false;
+    }
+
+    if (!activateFromHash()) {
+      // If no valid hash, check if hash is "services" and scroll to overview
+      if (window.location.hash === "#services") {
+        const overview = document.getElementById("services");
+        if (overview) overview.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    window.addEventListener("hashchange", activateFromHash);
+
     // IntersectionObserver for the section itself
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
