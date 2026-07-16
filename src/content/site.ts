@@ -5,7 +5,7 @@ export const site = {
   description:
     "Leading IT and networking solutions provider in U.A.E. Structured cabling, CCTV, PABX/VoIP, Wi-Fi, access control, automation and AMC services.",
   url: "https://ultrawaves.ae",
-  email: "ultrawavetechnologyllc@gmail.com",
+  email: "info@ultrawavetechnologies.com",
   phones: [
     { label: "Primary", number: "+971542375092", display: "+971 54 237 5092" },
     { label: "Office", number: "+971545404607", display: "+971 54 540 4607" },
