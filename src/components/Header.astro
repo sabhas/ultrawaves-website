@@ -5,46 +5,60 @@ import logoWithText from "../assets/web/logo-with-text.png";
 import { Image } from "astro:assets";
 ---
 
+
 <header
   id="header"
-  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-shadow"
+  class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl border-b border-border dark:border-border-dark transition-all duration-300"
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between lg:h-20">
+    <div class="flex h-16 items-center justify-between lg:h-20 transition-all duration-300" id="header-inner">
       <a href="#" class="flex items-center shrink-0" aria-label="Ultra Wave Technologies home">
         <Image
           src={logoIcon}
           alt="Ultra Wave Technologies logo"
           width={550}
           height={539}
-          class="h-10 w-10 object-contain sm:hidden"
+          class="h-9 w-9 object-contain sm:hidden"
         />
         <Image
           src={logoWithText}
           alt="Ultra Wave Technologies"
           width={775}
           height={537}
-          class="hidden sm:block h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain"
+          class="hidden sm:block h-11 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] object-contain transition-all duration-300"
         />
       </a>
 
-      <nav class="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-        {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-blue transition-colors rounded-lg hover:bg-brand-blue/5"
-            >
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
+      <div class="hidden lg:flex items-center gap-1" id="desktop-nav">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="nav-link group relative px-3 py-2 text-sm font-medium text-text-secondary dark:text-text-dark-secondary hover:text-brand-navy dark:hover:text-text-dark-primary transition-colors rounded-lg hover:bg-brand-navy/5 dark:hover:bg-white/5"
+          >
+            {link.label}
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-blue rounded-full transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
+          </a>
+        ))}
+      </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <button
+          id="theme-toggle"
+          type="button"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+          aria-label="Toggle dark mode"
+        >
+          <svg class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
         <a
           href="#contact"
-          class="hidden sm:inline-flex items-center rounded-lg bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue-dark transition-colors"
+          class="hidden sm:inline-flex items-center rounded-lg bg-brand-navy dark:bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-navy-dark dark:hover:bg-brand-blue-dark transition-all hover:shadow-lg hover:shadow-brand-navy/20 dark:hover:shadow-brand-blue/20"
         >
           Contact Us
         </a>
@@ -52,12 +66,12 @@ import { Image } from "astro:assets";
         <button
           id="mobile-menu-btn"
           type="button"
-          class="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+          class="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Toggle navigation menu"
         >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -66,64 +80,123 @@ import { Image } from "astro:assets";
     </div>
   </div>
 
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress" class="absolute bottom-0 left-0 h-0.5 bg-brand-blue transition-none" style="width: 0%" aria-hidden="true" />
+
+  <!-- Mobile menu overlay -->
+  <div
+    id="mobile-overlay"
+    class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden lg:hidden opacity-0 transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+
   <nav
     id="mobile-menu"
-    class="hidden lg:hidden border-t border-gray-100 bg-white"
+    class="fixed top-16 right-0 z-50 w-72 max-w-[85vw] h-[calc(100vh-4rem)] bg-white dark:bg-surface-dark-secondary border-l border-border dark:border-border-dark shadow-2xl hidden lg:hidden translate-x-full transition-transform duration-300 ease-out"
     aria-label="Mobile navigation"
   >
-    <div class="mx-auto max-w-7xl px-4 py-4 space-y-1">
-      {
-        navLinks.map((link) => (
+    <div class="flex flex-col h-full p-6">
+      <div class="space-y-1 flex-1">
+        {navLinks.map((link, i) => (
           <a
             href={link.href}
-            class="mobile-nav-link block rounded-lg px-4 py-3 text-base font-medium text-gray-700 hover:bg-brand-blue/5 hover:text-brand-blue"
+            class="mobile-nav-link block rounded-lg px-4 py-3 text-base font-medium text-text-primary dark:text-text-dark-primary hover:bg-gray-100 dark:hover:bg-white/5 hover:text-brand-blue dark:hover:text-brand-blue transition-all"
           >
             {link.label}
           </a>
-        ))
-      }
-      <a
-        href="#contact"
-        class="block rounded-lg bg-brand-blue px-4 py-3 text-center text-base font-semibold text-white hover:bg-brand-blue-dark mt-2"
-      >
-        Contact Us
-      </a>
+        ))}
+      </div>
+
+      <div class="pt-6 border-t border-border dark:border-border-dark space-y-4">
+        <a
+          href="#contact"
+          class="block w-full rounded-lg bg-brand-navy dark:bg-brand-blue px-4 py-3 text-center text-base font-semibold text-white hover:bg-brand-navy-dark dark:hover:bg-brand-blue-dark transition-colors"
+        >
+          Contact Us
+        </a>
+        <p class="text-center text-xs text-text-tertiary dark:text-text-dark-tertiary">
+          {site.phones[0].display}
+        </p>
+      </div>
     </div>
   </nav>
 </header>
 
 <script>
+  // ── Mobile Menu ──
   const btn = document.getElementById("mobile-menu-btn");
   const menu = document.getElementById("mobile-menu");
+  const overlay = document.getElementById("mobile-overlay");
   const openIcon = document.getElementById("menu-icon-open");
   const closeIcon = document.getElementById("menu-icon-close");
-  const header = document.getElementById("header");
+
+  function openMenu() {
+    menu?.classList.remove("hidden", "translate-x-full");
+    overlay?.classList.remove("hidden");
+    // Trigger reflow for transition
+    void menu?.offsetWidth;
+    menu?.classList.add("translate-x-0");
+    overlay?.classList.add("opacity-100");
+    btn?.setAttribute("aria-expanded", "true");
+    openIcon?.classList.add("hidden");
+    closeIcon?.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    menu?.classList.remove("translate-x-0");
+    menu?.classList.add("translate-x-full");
+    overlay?.classList.remove("opacity-100");
+    overlay?.classList.add("opacity-0");
+    btn?.setAttribute("aria-expanded", "false");
+    openIcon?.classList.remove("hidden");
+    closeIcon?.classList.add("hidden");
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      menu?.classList.add("hidden");
+      overlay?.classList.add("hidden");
+    }, 300);
+  }
 
   btn?.addEventListener("click", () => {
-    const isOpen = !menu?.classList.contains("hidden");
-    menu?.classList.toggle("hidden");
-    btn.setAttribute("aria-expanded", String(!isOpen));
-    openIcon?.classList.toggle("hidden");
-    closeIcon?.classList.toggle("hidden");
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    isOpen ? closeMenu() : openMenu();
   });
+
+  overlay?.addEventListener("click", closeMenu);
 
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      menu?.classList.add("hidden");
-      btn?.setAttribute("aria-expanded", "false");
-      openIcon?.classList.remove("hidden");
-      closeIcon?.classList.add("hidden");
-    });
+    link.addEventListener("click", closeMenu);
   });
+
+  // ── Scroll Shadow + Shrink + Progress Bar ──
+  const header = document.getElementById("header");
+  const headerInner = document.getElementById("header-inner");
+  const progressBar = document.getElementById("scroll-progress");
 
   window.addEventListener("scroll", () => {
-    if (!header) return;
-    header.classList.toggle("shadow-md", window.scrollY > 10);
+    const scrollY = window.scrollY;
+    if (!header || !headerInner) return;
+    header.classList.toggle("shadow-sm", scrollY > 10);
+    if (scrollY > 80) {
+      headerInner.classList.add("lg:h-16");
+      headerInner.classList.remove("lg:h-20");
+    } else {
+      headerInner.classList.remove("lg:h-16");
+      headerInner.classList.add("lg:h-20");
+    }
+
+    // Update scroll progress
+    if (progressBar) {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      progressBar.style.width = progress + "%";
+    }
   });
 
+  // ── Active Nav Link Observer ──
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -131,15 +204,32 @@ import { Image } from "astro:assets";
           const id = entry.target.id;
           navLinks.forEach((link) => {
             const href = link.getAttribute("href");
-            link.classList.toggle("text-brand-blue", href === `#${id}`);
-            link.classList.toggle("font-semibold", href === `#${id}`);
-            link.classList.toggle("text-gray-600", href !== `#${id}`);
+            const isActive = href === `#${id}`;
+            link.classList.toggle("text-brand-navy", isActive);
+            link.classList.toggle("dark:text-text-dark-primary", isActive);
+            link.classList.toggle("font-semibold", isActive);
+            link.classList.toggle("text-text-secondary", !isActive);
+            link.classList.toggle("dark:text-text-dark-secondary", !isActive);
+
+            // Active underline indicator
+            const indicator = link.querySelector("span");
+            if (indicator) {
+              indicator.style.width = isActive ? "50%" : "0";
+            }
           });
         }
       });
     },
-    { rootMargin: "-30% 0px -60% 0px" }
+    { rootMargin: "-10% 0px -35% 0px" }
   );
 
   sections.forEach((section) => observer.observe(section));
+
+  // ── Dark Mode Toggle ──
+  const themeToggle = document.getElementById("theme-toggle");
+  themeToggle?.addEventListener("click", () => {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
 </script>

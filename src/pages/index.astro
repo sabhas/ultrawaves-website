@@ -7,10 +7,12 @@ import ServicesOverview from "../components/ServicesOverview.astro";
 import ServiceSection from "../components/ServiceSection.astro";
 import PortfolioGrid from "../components/PortfolioGrid.astro";
 import Projects from "../components/Projects.astro";
+import Testimonials from "../components/Testimonials.astro";
 import ClientLogos from "../components/ClientLogos.astro";
+import FAQ from "../components/FAQ.astro";
 import ContactSection from "../components/ContactSection.astro";
 import Footer from "../components/Footer.astro";
-import { services } from "../content/services";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 ---
 
 <BaseLayout>
@@ -19,11 +21,79 @@ import { services } from "../content/services";
     <Hero />
     <About />
     <ServicesOverview />
-    {services.map((service, index) => <ServiceSection service={service} index={index} />)}
+    <ServiceSection />
     <PortfolioGrid />
     <Projects />
+    <Testimonials />
     <ClientLogos />
+    <FAQ />
     <ContactSection />
   </main>
   <Footer />
+  <WhatsAppButton />
+
+  <!-- Back to top -->
+  <button
+    id="back-to-top"
+    class="fixed bottom-6 left-6 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-surface-dark-secondary text-text-secondary dark:text-text-dark-secondary shadow-lg border border-border dark:border-border-dark opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:bg-brand-blue hover:text-white hover:border-brand-blue dark:hover:bg-brand-blue dark:hover:text-white"
+    aria-label="Back to top"
+  >
+    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
 </BaseLayout>
+
+<script>
+  (function () {
+    // ── Global image load handler ──
+    document.querySelectorAll("img:not([loading='eager'])").forEach((img) => {
+      if (img.complete) {
+        img.classList.add("loaded");
+      } else {
+        img.addEventListener("load", () => img.classList.add("loaded"), { once: true });
+        img.addEventListener("error", () => img.classList.add("loaded"), { once: true });
+      }
+    });
+
+    // ── Reveal all animate-on-scroll elements as they enter the viewport ──
+    const elements = document.querySelectorAll(".animate-on-scroll:not(.visible)");
+    if (elements.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      );
+      elements.forEach((el) => observer.observe(el));
+    }
+
+    // ── Back to top button ──
+    const backToTop = document.getElementById("back-to-top");
+    if (backToTop) {
+      let ticking = false;
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            const show = scrollY > window.innerHeight * 0.5;
+            backToTop.classList.toggle("opacity-0", !show);
+            backToTop.classList.toggle("translate-y-4", !show);
+            backToTop.classList.toggle("pointer-events-none", !show);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+  })();
+</script>

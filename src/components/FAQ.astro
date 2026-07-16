@@ -1,0 +1,134 @@
+---
+import { faqs } from "../content/faq";
+---
+
+<section id="faq" class="py-16 lg:py-24 bg-surface-secondary dark:bg-surface-dark-secondary transition-colors" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <span class="section-label">Have Questions?</span>
+      <h2 id="faq-heading" class="section-heading">
+        Frequently Asked Questions
+      </h2>
+      <span class="heading-accent mx-auto" aria-hidden="true" />
+    </div>
+
+    <div class="space-y-3" id="faq-list">
+      {faqs.map((faq) => (
+        <div class="faq-item rounded-2xl bg-surface dark:bg-surface-dark border border-border dark:border-border-dark shadow-sm transition-all duration-300">
+          <button
+            class="faq-toggle w-full flex items-center justify-between px-6 py-5 text-left"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${faq.id}`}
+          >
+            <span class="text-sm sm:text-base font-semibold text-text-primary dark:text-text-dark-primary pr-4">
+              {faq.question}
+            </span>
+            <span class="faq-icon relative h-5 w-5 shrink-0" aria-hidden="true">
+              <svg class="faq-icon-plus absolute inset-0 h-5 w-5 text-text-tertiary dark:text-text-dark-tertiary transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <svg class="faq-icon-minus absolute inset-0 h-5 w-5 text-brand-blue transition-all duration-300 opacity-0 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+              </svg>
+            </span>
+          </button>
+          <div
+            id={`faq-answer-${faq.id}`}
+            class="faq-answer overflow-hidden max-h-0 transition-all duration-300 ease-in-out"
+            role="region"
+          >
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-sm text-text-secondary dark:text-text-dark-secondary leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-item.active {
+    border-color: var(--color-brand-blue);
+    background: color-mix(in srgb, var(--color-brand-blue) 3%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-brand-blue) 15%, transparent);
+  }
+  .dark .faq-item.active {
+    background: color-mix(in srgb, var(--color-brand-blue) 8%, var(--color-surface-dark));
+    border-color: color-mix(in srgb, var(--color-brand-blue) 40%, transparent);
+  }
+  .faq-item.active .faq-icon-plus {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+  .faq-item.active .faq-icon-minus {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item .faq-icon-plus,
+    .faq-item .faq-icon-minus {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const items = document.querySelectorAll(".faq-item");
+    items.forEach((item) => {
+      const toggle = item.querySelector(".faq-toggle");
+      const answer = item.querySelector(".faq-answer");
+
+      toggle?.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+
+        // Close all others
+        items.forEach((other) => {
+          const otherToggle = other.querySelector(".faq-toggle");
+          const otherAnswer = other.querySelector(".faq-answer");
+          if (other !== item) {
+            otherToggle?.setAttribute("aria-expanded", "false");
+            if (otherAnswer) otherAnswer.style.maxHeight = "0";
+            other.classList.remove("active");
+          }
+        });
+
+        // Toggle current
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        if (isOpen) {
+          answer.style.maxHeight = "0";
+          item.classList.remove("active");
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+          item.classList.add("active");
+        }
+      });
+    });
+
+    // Scroll reveal for FAQ items
+    const faqList = document.getElementById("faq-list");
+    if (faqList) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll(".faq-item").forEach((item, i) => {
+              item.style.opacity = "0";
+              item.style.transform = "translateY(12px)";
+              item.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+              setTimeout(() => {
+                item.style.opacity = "1";
+                item.style.transform = "translateY(0)";
+              }, i * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(faqList);
+    }
+  })();
+</script>

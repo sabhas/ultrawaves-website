@@ -9,5 +9,4 @@ export const portfolioItems = [
   { caption: "Fiber Splicing with Fujikura-68-S" },
   { caption: "Fluke Testing" },
   { caption: "MTR room labeling as per DU and Etisalat" },
-  { caption: "AFL OTDR Testing" },
 ] as const;

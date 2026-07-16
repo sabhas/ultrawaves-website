@@ -3,14 +3,15 @@ export const site = {
   shortName: "Ultra",
   tagline: "Waves of Innovation",
   description:
-    "Leading IT and networking solutions provider in Dubai. Structured cabling, CCTV, PABX/VoIP, Wi-Fi, access control, automation and AMC services.",
+    "Leading IT and networking solutions provider in U.A.E. Structured cabling, CCTV, PABX/VoIP, Wi-Fi, access control, automation and AMC services.",
   url: "https://ultrawaves.ae",
-  email: "ultrawavetechnologyllc@gmail.com",
+  email: "info@ultrawavetechnologies.com",
   phones: [
     { label: "Primary", number: "+971542375092", display: "+971 54 237 5092" },
     { label: "Office", number: "+971545404607", display: "+971 54 540 4607" },
     { label: "Support", number: "+971502588347", display: "+971 50 258 8347" },
   ],
+  whatsapp: "+971542375092",
   address: {
     street: "Art Tower, Mezzanine Floor 2",
     area: "Al Raffa",
@@ -21,6 +22,17 @@ export const site = {
   contactPerson: "Sultan Al Hasnani",
   focus: "IT Network Services",
   cta: "Get in Touch for Free Consultation",
+  socialLinks: [
+    { platform: "LinkedIn", url: "[Add LinkedIn URL]" },
+    { platform: "Instagram", url: "[Add Instagram URL]" },
+    { platform: "Facebook", url: "[Add Facebook URL]" },
+  ],
+  stats: [
+    { number: "X", label: "Years Experience" },
+    { number: "X", label: "Projects Delivered" },
+    { number: "X", label: "Happy Clients" },
+    { number: "X", label: "Support" },
+  ],
 } as const;
 
 export const about = {
