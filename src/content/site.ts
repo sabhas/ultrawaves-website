@@ -3,7 +3,7 @@ export const site = {
   shortName: "Ultra",
   tagline: "Waves of Innovation",
   description:
-    "Leading IT and networking solutions provider in Dubai. Structured cabling, CCTV, PABX/VoIP, Wi-Fi, access control, automation and AMC services.",
+    "Leading IT and networking solutions provider in U.A.E. Structured cabling, CCTV, PABX/VoIP, Wi-Fi, access control, automation and AMC services.",
   url: "https://ultrawaves.ae",
   email: "ultrawavetechnologyllc@gmail.com",
   phones: [
